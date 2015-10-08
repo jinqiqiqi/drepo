@@ -1,7 +1,7 @@
 FROM centos
 MAINTAINER Eric King <jinqiqiqi@gamil.com>
 
-ADD ./CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo
+ADD ../CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo
 RUN ["rpm", "--import", "/etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7"]
 
 
