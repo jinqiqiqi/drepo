@@ -17,4 +17,4 @@ RUN sed -e 's/127.0.0.1:9000/9000/' \
 
 
 EXPOSE 9000
-ENTRYPOINT ["/usr/sbin/php-fpm", "--nodaemonize"]
+ENTRYPOINT ["/usr/sbin/php-fpm"]

@@ -10,14 +10,17 @@ RUN ["yum", "clean", "all"]
 RUN ["yum", "-y", "update"]
 RUN ["yum", "install", "-y", "nginx"]
 RUN ["yum", "clean", "all"]
-# RUN sed -e 's/127.0.0.1:9000/9000/' \
-# 		-e '/allowed_clients/d' \
-# 		-e '/catch_workers_output/s/^;//' \
-# 		-e '/\[error_log\]/d' \
-# 		-i /etc/php-fpm.d/www.conf
 
-VOLUME ["/usr/share/nginx/html"]
+RUN ["mv", "/etc/nginx/conf.d/default.conf", "/etc/nginx/conf.d/default.conf.bak"]
+RUN ["mv", "/etc/nginx/nginx.conf", "/etc/nginx/nginx.conf.bak"]
+ADD ./conf/default.conf /etc/nginx/conf.d/default.conf
+ADD ./conf/nginx.conf /etc/nginx/nginx.conf
+
+RUN ["echo", "'<?php phpinfo();'", ">", "/usr/share/nginx/html/i.php"]
 
 
-EXPOSE 9000
-ENTRYPOINT ["/usr/sbin/php-fpm", "--nodaemonize"]
+VOLUME ["/usr/share/nginx/html/", "/var/log/nginx/"]
+
+
+EXPOSE 80
+ENTRYPOINT ["nginx"]
