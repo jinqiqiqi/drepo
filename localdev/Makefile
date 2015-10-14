@@ -1,5 +1,21 @@
 #!/bin/sh
 
+ps:
+	docker ps -a
+start:
+	make start-mysql
+	make start-php
+	make start-nginx
+
+start-mysql:
+	docker start hppmysql
+
+start-php:
+	docker start hppphp
+
+start-nginx:
+	docker start hppnginx
+
 
 stop:
 	make stop-mysql

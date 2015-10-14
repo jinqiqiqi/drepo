@@ -9,7 +9,7 @@ RUN ["yum", "clean", "all"]
 RUN ["yum", "-y", "update"]
 RUN ["yum", "install", "-y", "php-mysql", "php-fpm", "php-gd", "php-mbstring"]
 RUN ["yum", "clean", "all"]
-RUN sed -e 's/127.0.0.1:9000/\[::\]:9000/' \
+RUN sed -e 's/127.0.0.1:9000/9000/' \
 		-e '/allowed_clients/d' \
 		-e 's/catch_workers_output/;catch_workers_output/' \
 		-e '/\[error_log\]/d' \
