@@ -7,5 +7,5 @@ RUN sed -e 's/127.0.0.1:9000/9000/' \
 		-e '/error_log/d' \
 		-i /etc/php-fpm.d/www.conf
 RUN mkdir -p /var/www/html
-EXPOSE 9003
+EXPOSE 9000
 ENTRYPOINT /usr/sbin/php-fpm --nodaemonize
