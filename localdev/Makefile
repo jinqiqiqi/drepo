@@ -1,11 +1,20 @@
 #!/bin/sh
 
 ps:
-	docker ps -a
-start:
-	make start-mysql
+	@echo All containers: 
+	@docker ps -a
+
+restart-php: stop-php;
 	make start-php
+
+restart-mysql: stop-mysql;
+	make start-mysql
+
+restart-nginx: stop-nginx;
 	make start-nginx
+
+
+start: start-mysql;start-php;start-nginx
 
 start-mysql:
 	docker start hppmysql
@@ -17,10 +26,7 @@ start-nginx:
 	docker start hppnginx
 
 
-stop:
-	make stop-mysql
-	make stop-php
-	make stop-nginx
+stop: stop-mysql;stop-php;stop-nginx
 
 stop-mysql:
 	docker stop hppmysql
@@ -31,10 +37,7 @@ stop-php:
 stop-nginx:
 	docker stop hppnginx
 
-rm:
-	make rm-mysql
-	make rm-php
-	make rm-nginx
+rm: rm-mysql;rm-php;rm-nginx
 
 rm-mysql:
 	docker rm hppmysql
@@ -46,10 +49,7 @@ rm-nginx:
 	docker rm hppnginx
 
 
-build:
-	make build-mysql
-	make build-php
-	make build-nginx
+build: build-mysql;build-php;build-nginx
 
 build-mysql:
 	docker build -t hpp/mysql ./mysql
@@ -58,10 +58,7 @@ build-php:
 build-nginx:
 	docker build -t hpp/nginx ./nginx
 
-run:
-	make run-mysql
-	make run-php
-	make run-nginx
+run: run-mysql;run-php;run-nginx
 
 run-mysql:
 	docker run -d --name hppmysql -p 3306:3306 hpp/mysql
@@ -72,3 +69,12 @@ run-php:
 
 run-nginx:
 	docker run -d --name hppnginx --link hppphp:php --link hppmysql:mysql --volumes-from hppphp -p 80:80 hpp/nginx
+
+bash-nginx:
+	docker exec -it hppnginx bash
+
+bash-mysql:
+	docker exec -it hppmysql bash
+
+bash-php:
+	docker exec -it hppphp bash
