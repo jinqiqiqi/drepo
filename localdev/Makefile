@@ -53,6 +53,8 @@ build: build-mysql build-php build-nginx
 
 build-mysql:
 	docker build -t hpp/mysql ./mysql
+build-mq:
+	docker build -t hpp/mq ./rabbitmq
 build-php:
 	docker build -t hpp/php ./php
 build-nginx:
