@@ -13,11 +13,10 @@ RUN sed -e 's/127.0.0.1:9000/9000/' \
 		-e '/allowed_clients/d' \
 		-e 's/catch_workers_output/;catch_workers_output/' \
 		-e '/\[error_log\]/d' \
-		-e 's/;chroot\ =/chroot\ =\ \/usr\/share\/nginx\/html/' \
 		-i /etc/php-fpm.d/www.conf
 
 VOLUME ["/usr/share/nginx/html/"]
-WORKDIR /usr/share/nginx/html/
+# WORKDIR /usr/share/nginx/html/
 
 EXPOSE 9000
 ENTRYPOINT ["/usr/sbin/php-fpm"]

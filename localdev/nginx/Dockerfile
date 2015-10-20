@@ -16,11 +16,10 @@ RUN ["mv", "/etc/nginx/nginx.conf", "/etc/nginx/nginx.conf.bak"]
 ADD ./conf/default.conf /etc/nginx/conf.d/default.conf
 ADD ./conf/nginx.conf /etc/nginx/nginx.conf
 
-RUN ["echo", "'<?php phpinfo();'", ">", "/usr/share/nginx/html/i.php"]
-
 
 VOLUME ["/usr/share/nginx/html/", "/var/log/nginx/"]
 
+# WORKDIR /usr/share/nginx/html/
 
 EXPOSE 80
 ENTRYPOINT ["nginx"]
