@@ -22,12 +22,14 @@ RUN chmod +x /opt/shells/build.sh
 
 RUN /opt/shells/build.sh
 
+ADD ./conf/nginx.conf /opt/nginx163/conf/nginx.conf
 
 
 
-# VOLUME ["/usr/share/nginx/html/"]
+
+VOLUME ["/opt/nginx163/html"]
 # WORKDIR /usr/share/nginx/html/
 
 EXPOSE 88
 EXPOSE 99
-# ENTRYPOINT ["/usr/sbin/php-fpm"]
+ENTRYPOINT ["/opt/nginx163/sbin/nginx"]

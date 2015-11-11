@@ -17,8 +17,8 @@ rm:
 build:
 	@docker build -t hpp/livestream .
 
-run: 
-	@docker run -d --name livestream -p 88:88 -p 99:99 hpp/livestream
+run: stop rm 
+	@docker run -d --name livestream -p 88:88 -p 99:99 -v `pwd`/html/:/opt/nginx163/html hpp/livestream
 
 bash:
 	@docker exec -it livestream bash

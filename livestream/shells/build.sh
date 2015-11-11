@@ -8,10 +8,10 @@ make install
 
 cd /opt/src/
 
-git clone https://github.com/jp9000/obs-studio.git
-cd obs-studio
+# git clone https://github.com/jp9000/obs-studio.git
+# cd obs-studio
 
-mkdir build && cd build
-cmake ..
-make -j4
-make install 
+# mkdir build && cd build
+# cmake ..
+# make -j4
+# make install 
