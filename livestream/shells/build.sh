@@ -1,8 +1,8 @@
 #!/bin/sh
 
-cd /opt/src/nginx-1.8.0
+cd /opt/src/nginx-1.6.3
 
-./configure --add-module=/opt/src/nginx-rtmp-module --prefix=/opt/nginx180/
+./configure --add-module=/opt/src/nginx-rtmp-module --prefix=/opt/nginx163
 make
 make install
 
@@ -14,4 +14,4 @@ cd obs-studio
 mkdir build && cd build
 cmake ..
 make -j4
-sudo make install 
+make install 

@@ -10,10 +10,10 @@ RUN ["yum", "-y", "update"]
 
 RUN yum -y install pcre* openssl* gcc* wget unzip cmake git ffmpeg-devel
 
-RUN yum -y install libX11-devel libGL-devel libv4l-devel pulseaudio-libs-devel x264-devel freetype-devel fontconfig-devel libXcomposite-devel libXinerama-devel qt5-qtbase-devel qt5-qtx11extras-devel libcurl-devel systemd-devel
+RUN yum -y install libX11-devel libGL-devel libv4l-devel pulseaudio-libs-devel x264-devel freetype-devel fontconfig-devel libXcomposite-devel libXinerama-devel qt5-qtbase-devel qt5-qtx11extras-devel libcurl-devel 
 
 ###### dynamic lines
-ADD ./src/nginx-1.8.0.tar.gz /opt/src/
+ADD ./src/nginx-1.6.3.tar.gz /opt/src/
 ADD ./src/nginx-rtmp-module.tar.gz /opt/src/
 
 ADD ./shells/build.sh /opt/shells/build.sh
