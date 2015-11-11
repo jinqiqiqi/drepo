@@ -33,3 +33,15 @@ failovermethod=priority
 baseurl=http://mirrors.aliyun.com/centos/$releasever/contrib/$basearch/
 gpgcheck=0
 gpgkey=http://mirrors.aliyun.com/centos/RPM-GPG-KEY-CentOS-7
+enabled=0
+
+[epel]
+name=epel-$releasever - Contrib - mirrors.aliyun.com
+failovermethod=priority
+baseurl=http://mirrors.aliyun.com/epel/$releasever/$basearch/
+gpgcheck=0
+gpgkey=http://mirrors.aliyun.com/centos/RPM-GPG-KEY-CentOS-7
+enabled=1
+
+
+
