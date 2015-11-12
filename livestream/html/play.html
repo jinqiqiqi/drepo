@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Live Player</title>
+	<script src="jwplayer/jwplayer.js"></script>
+</head>
+<body>
+<b>Live vide</b>
+<div id="mediaSpace">Loading</div>
+<script type="text/javascript">
+	var server = window.location.hostname;
+	// var live_url = 'rtmp://' + server + '/tv/test13';
+	// var live_url = 'rtmp://' + server + '/hls/test2';
+	var live_url = 'rtmp://' + server + '/live/usbcam';
+
+	console.log(live_url);
+
+	jwplayer("mediaSpace").setup({
+		// "flashplayer": "jwplayer/jwplayer.flash.swf",
+		"playlist":[{
+			"sources": [{
+				file: live_url
+			}]
+		}],
+		"width": 600,
+		"height": 480,
+		"autostart": true
+	})
+</script>
+
+</body>
+</html>
