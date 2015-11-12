@@ -2,7 +2,7 @@
 
 cd /opt/src/nginx-1.6.3
 
-./configure --add-module=/opt/src/nginx-rtmp-module --add-module=/opt/src/nginx-rtmp-module/hls --prefix=/opt/nginx163/
+./configure --add-module=/opt/src/nginx-rtmp-module --prefix=/opt/nginx163/
 make
 make install
 
