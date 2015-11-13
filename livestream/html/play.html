@@ -5,28 +5,38 @@
 	<script src="jwplayer/jwplayer.js"></script>
 </head>
 <body>
-<b>Live vide</b>
-<div id="mediaSpace">Loading</div>
+<b>Live video</b>
+<div style="float:left">
+	<span><span id="mediaSpace"></span></span>
+	<span id="html5video">Loading</span>
+</div>
 <script type="text/javascript">
 	var server = window.location.hostname;
 	// var live_url = 'rtmp://' + server + '/tv/test13';
 	// var live_url = 'rtmp://' + server + '/hls/test2';
-	var live_url = 'rtmp://' + server + '/live/usbcam';
+	var rtmp_url = 'rtmp://' + server + '/live/usbcam';
+	var hls_url = 'http://' + server + ':88/hls/usbcam.m3u8';
 
-	console.log(live_url);
+	console.log(rtmp_url, hls_url);
 
 	jwplayer("mediaSpace").setup({
 		// "flashplayer": "jwplayer/jwplayer.flash.swf",
 		"playlist":[{
 			"sources": [{
-				file: live_url
+				file: rtmp_url
 			}]
 		}],
 		"width": 600,
 		"height": 480,
 		"autostart": true
-	})
+	});
+
+
+	html5_text = '<video width="352" height="288" src="'+ hls_url+ '" controls autoplay></video>';
+	document.getElementById("html5video").innerHTML = html5_text;
 </script>
+
+
 
 </body>
 </html>
