@@ -11,14 +11,14 @@ start:
 stop: 
 	@docker stop livestream
 
-rm: 
+rm: stop
 	@docker rm livestream
 
 build:
 	@docker build -t hpp/livestream .
 
 run: stop rm 
-	@docker run -d --name livestream -p 88:88 -p 1935:1935 -v `pwd`/html:/opt/nginx163/html hpp/livestream
+	@docker run -d --name livestream -p 88:88 -p 1935:1935 -v `pwd`/html:/opt/flvs -v `pwd`/html:/opt/nginx163/html hpp/livestream
 
 bash:
 	@docker exec -it livestream bash

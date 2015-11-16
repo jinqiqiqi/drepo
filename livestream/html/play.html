@@ -2,6 +2,7 @@
 <html>
 <head>
 	<title>Live Player</title>
+	<meta id="viewport" name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no" />
 	<script src="jwplayer/jwplayer.js"></script>
 </head>
 <body>
@@ -13,9 +14,11 @@
 <script type="text/javascript">
 	var server = window.location.hostname;
 	// var live_url = 'rtmp://' + server + '/tv/test13';
-	// var live_url = 'rtmp://' + server + '/hls/test2';
-	var rtmp_url = 'rtmp://' + server + '/live/usbcam';
-	var hls_url = 'http://' + server + ':88/hls/usbcam.m3u8';
+	// var rtmp_url = 'rtmp://' + server + '/hls/usbcam';
+	var rtmp_url = 'rtmp://' + server + '/live/usbcam1';
+	// var rtmp_url = 'rtmp://' + server + '/vod/a.mp4';
+	// var rtmp_url = 'http://' + server + ':88/a.mp4';
+	var hls_url = 'http://' + server + ':88/hls/usbcam1.m3u8';
 
 	console.log(rtmp_url, hls_url);
 
@@ -26,13 +29,16 @@
 				file: rtmp_url
 			}]
 		}],
-		"width": 600,
-		"height": 480,
+		"width": 300,
+		"height": 240,
 		"autostart": true
 	});
 
 
-	html5_text = '<video width="352" height="288" src="'+ hls_url+ '" controls autoplay></video>';
+	html5_text = '<video width="300" height="240" controls autoplay>';
+	html5_text += '<source  src="'+ hls_url+ '" type="video/mp4">';
+	html5_text += "Your browser don't support the video tag";
+	html5_text += '</video>';
 	document.getElementById("html5video").innerHTML = html5_text;
 </script>
 

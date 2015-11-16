@@ -26,11 +26,11 @@ RUN /opt/shells/build.sh
 
 ADD ./conf/nginx.conf /opt/nginx163/conf/nginx.conf
 
-# RUN yum -y install http://li.nux.ro/download/nux/dextop/el7/x86_64/nux-dextop-release-0-5.el7.nux.noarch.rpm
+RUN yum -y install http://li.nux.ro/download/nux/dextop/el7/x86_64/nux-dextop-release-0-5.el7.nux.noarch.rpm
 
-# RUN ["rpm", "--import", "/etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7"]
-# RUN ["rpm", "--import", "/etc/pki/rpm-gpg/RPM-GPG-KEY-nux.ro"]
-# RUN yum -y install ffmpeg-devel
+RUN ["rpm", "--import", "/etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7"]
+RUN ["rpm", "--import", "/etc/pki/rpm-gpg/RPM-GPG-KEY-nux.ro"]
+RUN yum -y install ffmpeg-devel
 
 
 
