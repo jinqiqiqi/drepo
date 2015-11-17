@@ -20,11 +20,13 @@ RUN yum -y install nginx php-fpm phpmyadmin mariadb-server
 
 RUN ["mysql_install_db", "--user=mysql", "--datadir=/var/lib/mysql/"]
 
-ADD ./init.sh /opt/shells/init.sh
-RUN chmod +x /opt/shells/init.sh && /opt/shells/init.sh
+# ADD ./init.sh /opt/shells/init.sh
+# RUN chmod +x /opt/shells/init.sh && /opt/shells/init.sh
 
 ADD ./conf/book.conf /etc/nginx/conf.d/book.conf
-RUN sed -e 's/daemonize = no/daemonize = yes/' -i /etc/php-fpm.conf
+RUN sed -e 's/daemonize = no/daemonize = yes/' \
+	-e 's/;date.timezone =/date.timezone = "Asia\/Shanghai"/' \
+	-e 's/display_errors = Off/display_errors = On/' -i /etc/php.ini
 # RUN echo "daemon off;" >> /etc/nginx/nginx.conf
 VOLUME ["/usr/share/nginx/html/"]
 
