@@ -17,7 +17,7 @@ build:
 	@docker build -t kinch/accountbook .
 
 run: stop rm 
-	@docker run -d --name accountbook -p 80:80 -v /home/kinch/Public/book/newMem:/usr/share/nginx/html/ -v /home/kinch/Public/book/mysql_data:/var/lib/mysql kinch/accountbook
+	@docker run -d --name accountbook -p 80:80 -p 9001:9001 -v /Users/kinch/Public/book/newMem:/usr/share/nginx/html/ kinch/accountbook
 
 bash:
 	@docker exec -it accountbook bash
