@@ -20,8 +20,9 @@ RUN yum -y install nginx php-fpm phpmyadmin mariadb-server
 
 RUN ["mysql_install_db", "--user=mysql", "--datadir=/var/lib/mysql/"]
 
-# ADD ./init.sh /opt/shells/init.sh
-# RUN chmod +x /opt/shells/init.sh && /opt/shells/init.sh
+ADD init.sh /opt/shells/init.sh
+RUN chmod +x /opt/shells/init.sh 
+RUN /opt/shells/init.sh
 
 ADD ./conf/book.conf /etc/nginx/conf.d/book.conf
 RUN sed -e 's/daemonize = no/daemonize = yes/' \
@@ -32,7 +33,7 @@ VOLUME ["/usr/share/nginx/html/"]
 
 EXPOSE 80
 # ENTRYPOINT ["/usr/sbin/nginx"]
-
+ENV TERM dumb
 CMD nginx && php-fpm && mysqld_safe 
 
 
