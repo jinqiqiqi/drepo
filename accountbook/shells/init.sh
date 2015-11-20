@@ -1,6 +1,6 @@
 #!/bin/sh
 
-/usr/bin/mysqld_safe --user=mysql &
+/usr/libexec/mysqld --user=mysql --basedir=/usr --datadir=/var/lib/mysql --plugin-dir=/usr/lib64/mysql/plugin --log-error=/var/log/mariadb/mariadb.log --pid-file=/var/run/mariadb/mariadb.pid --socket=/var/lib/mysql/mysql.sock &
 
 sleep 5
 
