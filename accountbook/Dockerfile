@@ -9,7 +9,7 @@ RUN ["yum", "clean", "all"]
 RUN ["yum", "-y", "update"]
 
 # 安装需要的软件
-RUN yum -y install nginx php-fpm phpmyadmin mariadb-server supervisor
+RUN yum -y install nginx php-fpm phpmyadmin mariadb-server supervisor php-mcrypt php-ldap php-magickwand php-imap php-markdown php-soap php-xmlrpc php-devel php-pecl-memcached php-pecl-uuid memcached 
 
 # 初始化数据库
 RUN mysql_install_db --user=mysql
