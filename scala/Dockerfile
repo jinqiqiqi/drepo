@@ -31,18 +31,18 @@ RUN alternatives --install /usr/bin/scalac scalac /opt/scala-2.11.7/bin/scalac 2
 RUN alternatives --install /usr/bin/scaladoc scaladoc /opt/scala-2.11.7/bin/scaladoc 2 
 RUN alternatives --install /usr/bin/scalap scalap /opt/scala-2.11.7/bin/scalap 2
 
-echo "" >> /etc/profile
-echo "## Setting JAVA_HOME and PATH for all USERS ##" >> /etc/profile
-echo "export JAVA_HOME=/usr/java/jdk1.8.0_40" >> /etc/profile
-echo "export PATH=\$PATH:\$JAVA_HOME/bin" >> /etc/profile
+RUN echo "" >> /etc/profile
+RUN echo "## Setting JAVA_HOME and PATH for all USERS ##" >> /etc/profile
+RUN echo "export JAVA_HOME=/usr/java/jdk1.8.0_40" >> /etc/profile
+RUN echo "export PATH=\$PATH:\$JAVA_HOME/bin" >> /etc/profile
 
-echo "" >> /etc/profile
-echo "## Setting JAVA_HOME and PATH for all USERS ##" >> /etc/profile
-echo "export SCALA_HOME=/opt/scala-2.11.7/" >> /etc/profile
-echo "export PATH=\$PATH:\$SCALA_HOME/bin" >> /etc/profile
+RUN echo "" >> /etc/profile
+RUN echo "## Setting JAVA_HOME and PATH for all USERS ##" >> /etc/profile
+RUN echo "export SCALA_HOME=/opt/scala-2.11.7/" >> /etc/profile
+RUN echo "export PATH=\$PATH:\$SCALA_HOME/bin" >> /etc/profile
 
 
-source /etc/profile
+RUN source /etc/profile
 
 # ENTRYPOINT ["/usr/bin/mysqld_safe"]
 # CMD mysqld_safe 
