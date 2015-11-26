@@ -8,9 +8,10 @@ RUN ["rpm", "--import", "/etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7"]
 RUN ["yum", "clean", "all"]
 RUN ["yum", "-y", "update"]
 
-
+# install wget
 RUN yum -y install wget
 
+# download and install both java and scala
 RUN cd /opt/
 RUN wget --no-cookies --no-check-certificate --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" "http://download.oracle.com/otn-pub/java/jdk/8u66-b17/jdk-8u66-linux-x64.tar.gz"
 RUN wget http://downloads.typesafe.com/scala/2.11.7/scala-2.11.7.tgz
@@ -41,8 +42,5 @@ RUN echo "export PATH=\$PATH:\$SCALA_HOME/bin" >> /etc/profile
 
 
 RUN source /etc/profile
-
-# ENTRYPOINT ["/usr/bin/mysqld_safe"]
-# CMD mysqld_safe 
 
 
