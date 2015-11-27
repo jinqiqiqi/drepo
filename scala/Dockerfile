@@ -3,10 +3,13 @@ MAINTAINER Eric King <jinqiqiqi@gamil.com>
 
 
 ###### static lines
+RUN curl https://bintray.com/sbt/rpm/rpm | tee /etc/yum.repos.d/bintray-sbt-rpm.repo
 ADD ./conf/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo
+
 RUN ["rpm", "--import", "/etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7"]
 RUN ["yum", "clean", "all"]
 RUN ["yum", "-y", "update"]
+RUN ["yum", "install", "-y", "sbt"]
 
 # install wget
 RUN yum -y install wget
@@ -39,6 +42,10 @@ RUN echo "" >> /etc/profile
 RUN echo "## Setting JAVA_HOME and PATH for all USERS ##" >> /etc/profile
 RUN echo "export SCALA_HOME=/opt/scala-2.11.7/" >> /etc/profile
 RUN echo "export PATH=\$PATH:\$SCALA_HOME/bin" >> /etc/profile
+
+
+
+
 
 
 RUN source /etc/profile
