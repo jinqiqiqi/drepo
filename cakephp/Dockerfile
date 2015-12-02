@@ -3,14 +3,14 @@ MAINTAINER Eric King <jinqiqiqi@gamil.com>
 
 
 ###### static lines
-RUN curl https://bintray.com/sbt/rpm/rpm | tee /etc/yum.repos.d/bintray-sbt-rpm.repo
+# RUN curl https://bintray.com/sbt/rpm/rpm | tee /etc/yum.repos.d/bintray-sbt-rpm.repo
 ADD ./conf/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo
 
 RUN ["rpm", "--import", "/etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7"]
 RUN ["yum", "clean", "all"]
 RUN ["yum", "-y", "update"]
 
-RUN yum install -y php php-mbstring php-intl phpMyAdmin nginx php-composer-installers php-fpm php-mbstring php-mysql php-gd supervisor php-imap php-soap php-xmlrpc php-pecl-redis redis mariadb-server wget
+RUN yum install -y php php-mbstring php-intl phpMyAdmin nginx php-composer-installers php-fpm php-mbstring php-mysql php-gd supervisor php-imap php-soap php-xmlrpc php-pecl-redis redis mariadb-server wget unzip
 
 # 初始化数据库
 RUN mysql_install_db --user=mysql
