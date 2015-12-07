@@ -7,10 +7,10 @@ MAINTAINER Eric King <jinqiqiqi@gamil.com>
 ADD ./conf/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo
 
 RUN ["rpm", "--import", "/etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7"]
-RUN ["yum", "clean", "all"]
-RUN ["yum", "-y", "update"]
+RUN yum clean all
+RUN yum -y update
 
-RUN yum install -y php php-mbstring php-intl phpMyAdmin nginx php-fpm php-mbstring php-mysql php-gd php-imap php-soap php-xmlrpc php-pecl-redis redis mariadb-server supervisor
+RUN yum install -y php php-mbstring php-intl phpMyAdmin php-fpm php-mbstring php-mysql php-gd php-imap php-soap php-xmlrpc php-pecl-redis redis mariadb-server supervisor nginx
 
 # 初始化数据库
 RUN mysql_install_db --user=mysql
@@ -38,7 +38,7 @@ RUN sed -e 's/nodaemon=false/nodaemon=true/' \
 	-i /etc/supervisord.conf
 
 
-EXPOSE 888 9001 1234
+EXPOSE 888 9001
 
 ENTRYPOINT ["/usr/bin/supervisord"]
 

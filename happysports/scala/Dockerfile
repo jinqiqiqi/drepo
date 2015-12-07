@@ -43,7 +43,6 @@ RUN alternatives --install /usr/bin/scalac scalac /opt/scala-2.11.7/bin/scalac 2
 RUN alternatives --install /usr/bin/scaladoc scaladoc /opt/scala-2.11.7/bin/scaladoc 2 
 RUN alternatives --install /usr/bin/scalap scalap /opt/scala-2.11.7/bin/scalap 2
 
-
 RUN alternatives --install /usr/bin/sbt sbt /opt/sbt/bin/sbt 2
 
 RUN echo "" >> /etc/profile
