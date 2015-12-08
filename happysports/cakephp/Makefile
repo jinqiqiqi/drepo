@@ -23,7 +23,7 @@ new:
 	
 run: stop rm
 	# for linux
-	@docker run -d --name dev_cakephp -p 80:80 -p 9002:9001 -v /home/kinch/Public/cakephp:/usr/share/nginx/html/cakephp kinch/dev_cakephp
+	@docker run -d --name dev_cakephp -p 80:80 -p 9002:9001 -p 1234:1234 -p 3306:3306 -v /home/kinch/Public/mls:/opt/mls kinch/dev_hppscala -v /home/kinch/Public/cakephp:/usr/share/nginx/html/cakephp kinch/dev_cakephp
 
 	# for mac
 	# @docker run -d --name dev_cakephp -p 80:80 -p 9002:9001 -v /User/kinch/Public/cakephp:/usr/share/nginx/html/cakephp kinch/dev_cakephp
