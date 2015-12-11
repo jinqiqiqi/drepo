@@ -47,6 +47,8 @@ RUN sed -e 's/127.0.0.1:9000/9000/' \
 		-e 's/php_value\[session.save_path\] = \/var\/lib\/php\/session/php_value\[session.save_path\] = "tcp:\/\/localhost:6379?weight=1\&timeout=60\&database=10\&prefix=HAPPYSPORTS_SESSION"/' \
 		-i /etc/php-fpm.d/www.conf
 
+RUN sed -e 's/\[mysqld\]/\[mysqld\]\nlower_case_table_names=1\n/' \
+		-i /etc/my.cnf
 
 RUN echo "php_value[session.name] = \"HAPPYSPORTS_SESSION\"" >> /etc/php-fpm.d/www.conf
 RUN echo "php_value[session.gc_maxlifetime] = 3600" >> /etc/php-fpm.d/www.conf
