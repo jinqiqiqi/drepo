@@ -1,0 +1,11 @@
+redisx:
+    build: ./redis
+    ports:
+        - "6379:6379"
+    links:
+        - mysqlx 
+
+mysqlx:
+    build: ./mysql
+    ports:
+        - "3306:3306"
