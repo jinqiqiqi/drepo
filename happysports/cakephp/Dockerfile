@@ -69,6 +69,7 @@ RUN alternatives --install /usr/bin/javaws javaws /opt/jdk1.8.0_66/bin/javaws 2
 RUN alternatives --install /usr/bin/javac javac /opt/jdk1.8.0_66/bin/javac 2 
 RUN alternatives --install /usr/bin/jar jar /opt/jdk1.8.0_66/bin/jar 2 
 RUN alternatives --install /usr/bin/jps jps /opt/jdk1.8.0_66/bin/jps 2
+RUN alternatives --install /usr/bin/javap javap /opt/jdk1.8.0_66/bin/javap 2
 
 RUN alternatives --install /usr/bin/scala scala /opt/scala-2.11.7/bin/scala 2 
 RUN alternatives --install /usr/bin/scalac scalac /opt/scala-2.11.7/bin/scalac 2 
