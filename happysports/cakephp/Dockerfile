@@ -54,14 +54,15 @@ RUN echo "php_value[session.name] = \"HAPPYSPORTS_SESSION\"" >> /etc/php-fpm.d/w
 RUN echo "php_value[session.gc_maxlifetime] = 3600" >> /etc/php-fpm.d/www.conf
 
 
-RUN cd /opt/
-RUN wget -c --tries=35 --no-cookies --no-check-certificate --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" "http://download.oracle.com/otn-pub/java/jdk/8u66-b17/jdk-8u66-linux-x64.tar.gz"
-RUN wget -c --tries=35 http://downloads.typesafe.com/scala/2.11.7/scala-2.11.7.tgz
-RUN wget -c --tries=35 https://dl.bintray.com/sbt/native-packages/sbt/0.13.8/sbt-0.13.8.tgz
+# download installer packages on-line.
+RUN wget -c --tries=35 --no-cookies --no-check-certificate --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" "http://download.oracle.com/otn-pub/java/jdk/8u66-b17/jdk-8u66-linux-x64.tar.gz" -O /opt/jdk-8u66-linux-x64.tar.gz
+RUN wget -c --tries=35 http://downloads.typesafe.com/scala/2.11.7/scala-2.11.7.tgz -O /opt/scala-2.11.7.tgz
+RUN wget -c --tries=35 https://dl.bintray.com/sbt/native-packages/sbt/0.13.8/sbt-0.13.8.tgz -O /opt/sbt-0.13.8.tgz
 
-RUN tar -zxf jdk-8u66-linux-x64.tar.gz -C /opt/
-RUN tar -zxf scala-2.11.7.tgz -C /opt/
-RUN tar -zxf sbt-0.13.8.tgz -C /opt/
+RUN tar -zxf /opt/jdk-8u66-linux-x64.tar.gz -C /opt/
+RUN tar -zxf /opt/scala-2.11.7.tgz -C /opt/
+RUN tar -zxf /opt/sbt-0.13.8.tgz -C /opt/
+
 
 RUN alternatives --install /usr/bin/java java /opt/jdk1.8.0_66/bin/java 2 
 RUN alternatives --install /usr/bin/javaws javaws /opt/jdk1.8.0_66/bin/javaws 2 
