@@ -17,7 +17,7 @@ mysql:
         - TERM=dumb
 
 cakephp:
-    buid: ./cakephp
+    build: ./cakephp
     expose:
         - "80"
     ports:
