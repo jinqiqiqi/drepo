@@ -10,23 +10,23 @@ RUN ["rpm", "--import", "/etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7"]
 RUN ["yum", "clean", "all"]
 RUN ["yum", "-y", "update"]
 
-RUN yum install -y supervisor wget unzip
+# RUN yum install -y supervisor wget unzip
+RUN yum install -y wget unzip
 
-# 初始化数据库
-
-RUN sed -e 's/nodaemon=false/nodaemon=true/' \
-	-e 's/;\[inet_http_server\]/\[inet_http_server\]/' \
-	-e 's/;port=127.0.0.1:9001/port=*:9001/' \
-	-e 's/;username=user/username=user/' \
-	-e 's/;password=123/password=123/' \
-	-i /etc/supervisord.conf
+# RUN sed -e 's/nodaemon=false/nodaemon=true/' \
+# 	-e 's/;\[inet_http_server\]/\[inet_http_server\]/' \
+# 	-e 's/;port=127.0.0.1:9001/port=*:9001/' \
+# 	-e 's/;username=user/username=user/' \
+# 	-e 's/;password=123/password=123/' \
+# 	-i /etc/supervisord.conf
 
 ### installing for java
 
-RUN cd /opt/
-RUN wget --no-cookies --no-check-certificate --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" "http://download.oracle.com/otn-pub/java/jdk/8u66-b17/jdk-8u66-linux-x64.tar.gz"
-RUN wget http://downloads.typesafe.com/scala/2.11.7/scala-2.11.7.tgz
-RUN wget https://dl.bintray.com/sbt/native-packages/sbt/0.13.8/sbt-0.13.8.tgz
+WORKDIR /opt/
+
+RUN wget --tries=20 --no-cookies --no-check-certificate --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" "http://download.oracle.com/otn-pub/java/jdk/8u66-b17/jdk-8u66-linux-x64.tar.gz"
+RUN wget --tries=20 http://downloads.typesafe.com/scala/2.11.7/scala-2.11.7.tgz
+RUN wget --tries=20 https://dl.bintray.com/sbt/native-packages/sbt/0.13.8/sbt-0.13.8.tgz
 
 RUN tar -zxf jdk-8u66-linux-x64.tar.gz -C /opt/
 RUN tar -zxf scala-2.11.7.tgz -C /opt/
@@ -35,6 +35,7 @@ RUN tar -zxf sbt-0.13.8.tgz -C /opt/
 RUN alternatives --install /usr/bin/java java /opt/jdk1.8.0_66/bin/java 2 
 RUN alternatives --install /usr/bin/javaws javaws /opt/jdk1.8.0_66/bin/javaws 2 
 RUN alternatives --install /usr/bin/javac javac /opt/jdk1.8.0_66/bin/javac 2 
+RUN alternatives --install /usr/bin/javap javap /opt/jdk1.8.0_66/bin/javap 2 
 RUN alternatives --install /usr/bin/jar jar /opt/jdk1.8.0_66/bin/jar 2 
 RUN alternatives --install /usr/bin/jps jps /opt/jdk1.8.0_66/bin/jps 2
 
@@ -61,5 +62,5 @@ RUN source /etc/profile
 
 EXPOSE 1234
 
-ENTRYPOINT ["/usr/bin/supervisord"]
+ENTRYPOINT ["/bin/true"]
 

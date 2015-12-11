@@ -10,10 +10,7 @@ RUN ["rpm", "--import", "/etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7"]
 RUN yum clean all
 RUN yum -y update
 
-RUN yum install -y php php-mbstring php-intl phpMyAdmin php-fpm php-mbstring php-mysql php-gd php-imap php-soap php-xmlrpc php-pecl-redis redis mariadb-server supervisor nginx wget unzip
-
-# 初始化数据库
-RUN mysql_install_db --user=mysql
+RUN yum install -y php php-mbstring php-intl phpMyAdmin php-fpm php-mbstring php-mysql php-gd php-imap php-soap php-xmlrpc php-pecl-redis supervisor nginx wget unzip
 
 ADD ./conf/hpp.conf /etc/nginx/conf.d/hpp.conf
 ADD ./conf/hpp.ini /etc/supervisord.d/hpp.ini
@@ -34,7 +31,7 @@ RUN sed -e 's/daemonize = no/daemonize = yes/' \
 
 	-e 's/session.name = PHPSESSID/session.name = HAPPYSPORTS_SESSION/' \
 	-e 's/session.save_handler = files/session.save_handler = redis/' \
-	-e 's/;session.save_path = "\/tmp"/session.save_path = "tcp:\/\/localhost:6379?weight=1\&timeout=60\&database=10"/' \
+	-e 's/;session.save_path = "\/tmp"/session.save_path = "tcp:\/\/redis:6379?weight=1\&timeout=60\&database=10"/' \
 
 	-i /etc/php.ini
 
@@ -44,56 +41,15 @@ RUN sed -e 's/127.0.0.1:9000/9000/' \
 		-e '/error_log/d' \
 
 		-e 's/php_value\[session.save_handler\] = files/php_value\[session.save_handler\] = redis/' \
-		-e 's/php_value\[session.save_path\] = \/var\/lib\/php\/session/php_value\[session.save_path\] = "tcp:\/\/localhost:6379?weight=1\&timeout=60\&database=10\&prefix=HAPPYSPORTS_SESSION"/' \
+		-e 's/php_value\[session.save_path\] = \/var\/lib\/php\/session/php_value\[session.save_path\] = "tcp:\/\/redis:6379?weight=1\&timeout=60\&database=10\&prefix=HAPPYSPORTS_SESSION"/' \
 		-i /etc/php-fpm.d/www.conf
 
-RUN sed -e 's/\[mysqld\]/\[mysqld\]\nlower_case_table_names=1\n/' \
-		-i /etc/my.cnf
 
 RUN echo "php_value[session.name] = \"HAPPYSPORTS_SESSION\"" >> /etc/php-fpm.d/www.conf
 RUN echo "php_value[session.gc_maxlifetime] = 3600" >> /etc/php-fpm.d/www.conf
 
 
-# download installer packages on-line.
-RUN wget -c --tries=35 --no-cookies --no-check-certificate --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" "http://download.oracle.com/otn-pub/java/jdk/8u66-b17/jdk-8u66-linux-x64.tar.gz" -O /opt/jdk-8u66-linux-x64.tar.gz
-RUN wget -c --tries=35 http://downloads.typesafe.com/scala/2.11.7/scala-2.11.7.tgz -O /opt/scala-2.11.7.tgz
-RUN wget -c --tries=35 https://dl.bintray.com/sbt/native-packages/sbt/0.13.8/sbt-0.13.8.tgz -O /opt/sbt-0.13.8.tgz
-
-RUN tar -zxf /opt/jdk-8u66-linux-x64.tar.gz -C /opt/
-RUN tar -zxf /opt/scala-2.11.7.tgz -C /opt/
-RUN tar -zxf /opt/sbt-0.13.8.tgz -C /opt/
-
-
-RUN alternatives --install /usr/bin/java java /opt/jdk1.8.0_66/bin/java 2 
-RUN alternatives --install /usr/bin/javaws javaws /opt/jdk1.8.0_66/bin/javaws 2 
-RUN alternatives --install /usr/bin/javac javac /opt/jdk1.8.0_66/bin/javac 2 
-RUN alternatives --install /usr/bin/jar jar /opt/jdk1.8.0_66/bin/jar 2 
-RUN alternatives --install /usr/bin/jps jps /opt/jdk1.8.0_66/bin/jps 2
-RUN alternatives --install /usr/bin/javap javap /opt/jdk1.8.0_66/bin/javap 2
-
-RUN alternatives --install /usr/bin/scala scala /opt/scala-2.11.7/bin/scala 2 
-RUN alternatives --install /usr/bin/scalac scalac /opt/scala-2.11.7/bin/scalac 2 
-RUN alternatives --install /usr/bin/scaladoc scaladoc /opt/scala-2.11.7/bin/scaladoc 2 
-RUN alternatives --install /usr/bin/scalap scalap /opt/scala-2.11.7/bin/scalap 2
-
-RUN alternatives --install /usr/bin/sbt sbt /opt/sbt/bin/sbt 2
-
-RUN echo "" >> /etc/profile
-RUN echo "## Setting JAVA_HOME and PATH for all USERS ##" >> /etc/profile
-RUN echo "export JAVA_HOME=/opt/jdk1.8.0_66" >> /etc/profile
-RUN echo "export PATH=\$PATH:\$JAVA_HOME/bin" >> /etc/profile
-
-RUN echo "" >> /etc/profile
-RUN echo "## Setting SCALA_HOME and PATH for all USERS ##" >> /etc/profile
-RUN echo "export SCALA_HOME=/opt/scala-2.11.7/" >> /etc/profile
-RUN echo "export PATH=\$PATH:\$SCALA_HOME/bin" >> /etc/profile
-
-
-
-RUN source /etc/profile
-
-
-EXPOSE 80 9001 1234 3306 6379 9000
+EXPOSE 80
 
 ENTRYPOINT ["/usr/bin/supervisord"]
 
