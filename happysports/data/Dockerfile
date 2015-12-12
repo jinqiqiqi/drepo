@@ -3,31 +3,15 @@ MAINTAINER Eric King <jinqiqiqi@gamil.com>
 
 
 ###### static lines
-# RUN curl https://bintray.com/sbt/rpm/rpm | tee /etc/yum.repos.d/bintray-sbt-rpm.repo
 ADD ./conf/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo
 
 RUN ["rpm", "--import", "/etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7"]
 RUN yum clean all
 RUN yum -y update
 
-RUN yum install -y mariadb-server supervisor
+RUN yum install -y supervisor
 
-# 初始化数据库
-RUN sed -e 's/\[mysqld\]/\[mysqld\]\nlower_case_table_names=1\n/' \
-		-i /etc/my.cnf
-
-ENV MYSQL_HOST=localhost
-ENV MYSQL_USER=root
-ENV MYSQL_PASS=root
-
-RUN mysql_install_db --user=mysql
-
-ADD ./conf/setpassword.sh /opt/setpassword.sh
-RUN chmod u+x /opt/setpassword.sh
-RUN /opt/setpassword.sh
-
-
-ADD ./conf/hpp.ini /etc/supervisord.d/hpp.ini
+# ADD ./conf/hpp.ini /etc/supervisord.d/hpp.ini
 
 RUN sed -e 's/nodaemon=false/nodaemon=true/' \
 	-e 's/;\[inet_http_server\]/\[inet_http_server\]/' \
@@ -36,7 +20,8 @@ RUN sed -e 's/nodaemon=false/nodaemon=true/' \
 	-e 's/;password=123/password=123/' \
 	-i /etc/supervisord.conf
 
-EXPOSE 3306
+VOLUME ["/usr/share/nginx/html/", "/var/lib/mysql/", "/var/lib/redis/"]
+# EXPOSE 6379
 
 ENTRYPOINT ["/usr/bin/supervisord"]
 

@@ -4,6 +4,8 @@ redis:
         - "6379"
     ports:
         - "6379:6379"
+    volumes_from:
+        - data_storage
     environment:
         - TERM=dumb
 
@@ -11,10 +13,15 @@ mysql:
     build: ./mysql
     expose:
         - "3306"
-    ports:
-        - "3306:3306"
+    # ports:
+    #     - "3306:3306"
+    volumes_from:
+        - data_storage
     environment:
         - TERM=dumb
+        # - MYSQL_HOST=localhostx
+        # - MYSQL_USER=guestx
+        # - MYSQL_PASS=guestx
 
 cakephp:
     build: ./cakephp
@@ -26,6 +33,8 @@ cakephp:
         - mysql
         - redis
         - scala
+    volumes_from:
+        - data_storage
     environment:
         - TERM=dumb
 
@@ -38,7 +47,18 @@ scala:
     links:
         - mysql
         - redis
+    volumes_from:
+        - data_storage
     environment:
         - TERM=dumb
+
+data_storage:
+    build: ./data
+    volumes:
+        - /var/lib/mysql/
+        - /usr/share/nginx/html/
+        - /var/lib/redis/
+        - /var/lib/mls/
+
 
 

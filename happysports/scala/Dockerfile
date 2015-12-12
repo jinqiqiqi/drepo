@@ -24,9 +24,9 @@ RUN yum install -y wget unzip
 
 WORKDIR /opt/
 
-RUN wget --tries=20 --no-cookies --no-check-certificate --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" "http://download.oracle.com/otn-pub/java/jdk/8u66-b17/jdk-8u66-linux-x64.tar.gz"
-RUN wget --tries=20 http://downloads.typesafe.com/scala/2.11.7/scala-2.11.7.tgz
-RUN wget --tries=20 https://dl.bintray.com/sbt/native-packages/sbt/0.13.8/sbt-0.13.8.tgz
+RUN wget -c --tries=20 --no-cookies --no-check-certificate --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" "http://download.oracle.com/otn-pub/java/jdk/8u66-b17/jdk-8u66-linux-x64.tar.gz"
+RUN wget -c --tries=20 http://downloads.typesafe.com/scala/2.11.7/scala-2.11.7.tgz
+RUN wget -c --tries=20 https://dl.bintray.com/sbt/native-packages/sbt/0.13.8/sbt-0.13.8.tgz
 
 RUN tar -zxf jdk-8u66-linux-x64.tar.gz -C /opt/
 RUN tar -zxf scala-2.11.7.tgz -C /opt/
@@ -60,7 +60,16 @@ RUN echo "export PATH=\$PATH:\$SCALA_HOME/bin" >> /etc/profile
 
 RUN source /etc/profile
 
+RUN yum install -y supervisor
+
+RUN sed -e 's/nodaemon=false/nodaemon=true/' \
+	-e 's/;\[inet_http_server\]/\[inet_http_server\]/' \
+	-e 's/;port=127.0.0.1:9001/port=*:9001/' \
+	-e 's/;username=user/username=user/' \
+	-e 's/;password=123/password=123/' \
+	-i /etc/supervisord.conf
+
 EXPOSE 1234
 
-ENTRYPOINT ["/bin/true"]
+ENTRYPOINT ["/usr/bin/supervisord"]
 
