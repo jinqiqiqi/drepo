@@ -5,7 +5,7 @@ redis:
     ports:
         - "6379:6379"
     volumes_from:
-        - data_storage
+        - datastorage
     environment:
         - TERM=dumb
 
@@ -16,7 +16,7 @@ mysql:
     # ports:
     #     - "3306:3306"
     volumes_from:
-        - data_storage
+        - datastorage
     environment:
         - TERM=dumb
         # - MYSQL_HOST=localhostx
@@ -34,7 +34,7 @@ cakephp:
         - redis
         - scala
     volumes_from:
-        - data_storage
+        - datastorage
     environment:
         - TERM=dumb
 
@@ -48,17 +48,19 @@ scala:
         - mysql
         - redis
     volumes_from:
-        - data_storage
+        - datastorage
     environment:
         - TERM=dumb
 
-data_storage:
+datastorage:
     build: ./data
     volumes:
         - /var/lib/mysql/
         - /usr/share/nginx/html/
         - /var/lib/redis/
         - /var/lib/mls/
+    environment:
+        - TERM=dumb
 
 
 
