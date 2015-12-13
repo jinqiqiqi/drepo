@@ -9,7 +9,7 @@ RUN ["rpm", "--import", "/etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7"]
 RUN yum clean all
 RUN yum -y update
 
-RUN yum install -y supervisor
+RUN yum install -y supervisor wget unzip
 
 # ADD ./conf/hpp.ini /etc/supervisord.d/hpp.ini
 
@@ -20,7 +20,7 @@ RUN sed -e 's/nodaemon=false/nodaemon=true/' \
 	-e 's/;password=123/password=123/' \
 	-i /etc/supervisord.conf
 
-VOLUME ["/usr/share/nginx/html/", "/var/lib/mysql/", "/var/lib/redis/", "/var/log/nginx/", "/var/log/php-fpm/", "/var/log/redis/", "/var/log/mysql/"]
+VOLUME ["/usr/share/nginx/html/", "/var/lib/mysql/", "/var/lib/redis/", "/var/log/nginx/", "/var/log/php-fpm/", "/var/log/redis/", "/var/log/mysql/", "/var/lib/mls/"]
 # EXPOSE 6379
 
 ENTRYPOINT ["/usr/bin/supervisord"]
