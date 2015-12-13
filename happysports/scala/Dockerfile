@@ -28,7 +28,7 @@ WORKDIR /opt/
 # RUN wget -c --tries=20 https://www.reucon.com/cdn/java/jdk-8u66-linux-x64.tar.gz
 RUN axel -n 10 -a http://ftp.heanet.ie/mirrors/funtoo/distfiles/oracle-java/jdk-8u66-linux-x64.tar.gz
 RUN axel -n 10 -a http://downloads.typesafe.com/scala/2.11.7/scala-2.11.7.tgz
-RUN axel -n 10 -a https://dl.bintray.com/sbt/native-packages/sbt/0.13.8/sbt-0.13.8.tgz
+RUN wget -c --tries=20 https://dl.bintray.com/sbt/native-packages/sbt/0.13.8/sbt-0.13.8.tgz
 
 RUN tar -zxf jdk-8u66-linux-x64.tar.gz -C /opt/
 RUN tar -zxf scala-2.11.7.tgz -C /opt/
