@@ -11,7 +11,7 @@ RUN ["yum", "clean", "all"]
 RUN ["yum", "-y", "update"]
 
 # RUN yum install -y supervisor wget unzip
-RUN yum install -y unzip axel
+RUN yum install -y wget unzip axel
 
 # RUN sed -e 's/nodaemon=false/nodaemon=true/' \
 # 	-e 's/;\[inet_http_server\]/\[inet_http_server\]/' \
