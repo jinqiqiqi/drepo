@@ -55,6 +55,10 @@ scala:
 datastorage:
     build: ./data
     volumes:
+        - /var/log/nginx/
+        - /var/log/php-fpm/
+        - /var/log/redis/
+        - /var/log/mysql/
         - /var/lib/mysql/
         - /usr/share/nginx/html/
         - /var/lib/redis/
