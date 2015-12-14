@@ -31,7 +31,7 @@ RUN sed -e 's/daemonize = no/daemonize = yes/' \
 
 	-e 's/session.name = PHPSESSID/session.name = HAPPYSPORTS_SESSION/' \
 	-e 's/session.save_handler = files/session.save_handler = redis/' \
-	-e 's/;session.save_path = "\/tmp"/session.save_path = "tcp:\/\/redis:6379?weight=1\&timeout=60\&database=10"/' \
+	-e 's/;session.save_path = "\/tmp"/session.save_path = "tcp:\/\/redis:6379?weight=1\&timeout=60\&database=15"/' \
 
 	-i /etc/php.ini
 
