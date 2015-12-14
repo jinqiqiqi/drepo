@@ -3,9 +3,9 @@
 sleep 5
 
 if [ -z $MYSQL_USER  ]; then
-	export MYSQL_HOST=127.0.0.1
+	export MYSQL_HOST=%
 	export MYSQL_USER=root
-	export MYSQL_PASS=root
+	export MYSQL_PASS=Shanghai!1
 fi
 
 echo "host: ${MYSQL_HOST}"

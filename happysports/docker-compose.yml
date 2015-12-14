@@ -55,13 +55,13 @@ scala:
 datastorage:
     build: ./data
     volumes:
-        - /var/log/nginx/
-        - /var/log/php-fpm/
-        - /var/log/redis/
-        - /var/log/mysql/
-        - /var/lib/mysql/
+        - $HOME/Data/mls/logs/nginx/:/var/log/nginx/
+        - $HOME/Data/mls/logs/php-fpm/:/var/log/php-fpm/
+        - $HOME/Data/mls/logs/redis/:/var/log/redis/
+        - $HOME/Data/mls/logs/mysql/:/var/log/mysql/
+        - $HOME/Data/mls/data/mysql/:/var/lib/mysql/
+        - $HOME/Data/mls/data/redis/:/var/lib/redis/
         - $HOME/Public:/usr/share/nginx/html/
-        - /var/lib/redis/
         - $HOME/Public/mls:/var/lib/mls/
     environment:
         - TERM=dumb

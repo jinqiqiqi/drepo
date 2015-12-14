@@ -11,7 +11,6 @@ RUN yum -y update
 
 RUN yum install -y redis supervisor
 
-ADD ./conf/hpp.ini /etc/supervisord.d/hpp.ini
 
 RUN sed -e 's/bind 127.0.0.1/bind 0.0.0.0/' \
 		-i /etc/redis.conf
@@ -23,6 +22,7 @@ RUN sed -e 's/nodaemon=false/nodaemon=true/' \
 	-e 's/;password=123/password=123/' \
 	-i /etc/supervisord.conf
 
+ADD ./conf/hpp.ini /etc/supervisord.d/hpp.ini
 
 EXPOSE 6379
 

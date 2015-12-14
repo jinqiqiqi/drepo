@@ -16,18 +16,15 @@ RUN yum install -y mariadb-server supervisor
 RUN sed -e 's/\[mysqld\]/\[mysqld\]\nlower_case_table_names=1\n/' \
 		-i /etc/my.cnf
 
-ENV MYSQL_HOST=localhost
-ENV MYSQL_USER=root
-ENV MYSQL_PASS=root
-
 RUN mysql_install_db --user=mysql
+
+ENV MYSQL_HOST=%
+ENV MYSQL_USER=root
+ENV MYSQL_PASS=Shanghai!1
 
 ADD ./conf/setpassword.sh /opt/setpassword.sh
 RUN chmod u+x /opt/setpassword.sh
 RUN /opt/setpassword.sh
-
-
-ADD ./conf/hpp.ini /etc/supervisord.d/hpp.ini
 
 RUN sed -e 's/nodaemon=false/nodaemon=true/' \
 	-e 's/;\[inet_http_server\]/\[inet_http_server\]/' \
@@ -35,6 +32,8 @@ RUN sed -e 's/nodaemon=false/nodaemon=true/' \
 	-e 's/;username=user/username=user/' \
 	-e 's/;password=123/password=123/' \
 	-i /etc/supervisord.conf
+
+ADD ./conf/hpp.ini /etc/supervisord.d/hpp.ini
 
 EXPOSE 3306
 
