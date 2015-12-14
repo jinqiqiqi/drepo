@@ -60,9 +60,9 @@ datastorage:
         - /var/log/redis/
         - /var/log/mysql/
         - /var/lib/mysql/
-        - /usr/share/nginx/html/
+        - $HOME/Public:/usr/share/nginx/html/
         - /var/lib/redis/
-        - /var/lib/mls/
+        - $HOME/Public/mls:/var/lib/mls/
     environment:
         - TERM=dumb
 
