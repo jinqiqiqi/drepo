@@ -2,8 +2,8 @@ redis:
     build: ./redis
     expose:
         - "6379"
-    # ports:
-    #     - "6379:6379"
+    ports:
+        - "6379:6379"
     volumes_from:
         - datastorage
     environment:
@@ -13,8 +13,8 @@ mysql:
     build: ./mysql
     expose:
         - "3306"
-    # ports:
-    #     - "3306:3306"
+    ports:
+        - "3306:3306"
     volumes_from:
         - datastorage
     environment:
