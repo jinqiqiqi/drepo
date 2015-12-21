@@ -13,7 +13,7 @@ RUN yum -y update
 RUN yum install -y mariadb-server supervisor
 
 # 初始化数据库
-RUN sed -e 's/\[mysqld\]/\[mysqld\]\nlower_case_table_names=1\n/' \
+RUN sed -e 's/\[mysqld\]/\[mysqld\]\nlower_case_table_names=1\ncharacter_set_server=utf8\ncollation_server=utf8_general_ci\n/' \
 		-i /etc/my.cnf
 
 RUN mysql_install_db --user=mysql
