@@ -3,7 +3,7 @@ redis:
     expose:
         - "6379"
     ports:
-        - "6379:6379"
+        - "6377:6379"
     volumes_from:
         - datastorage
     environment:
@@ -14,7 +14,7 @@ mysql:
     expose:
         - "3306"
     ports:
-        - "3306:3306"
+        - "3307:3306"
     volumes_from:
         - datastorage
     environment:
@@ -28,7 +28,7 @@ cakephp:
     expose:
         - "80"
     ports:
-        - "80:80"
+        - "88:80"
     links:
         - mysql
         - redis
@@ -43,7 +43,7 @@ scala:
     expose:
         - "1234"
     ports:
-        - "1234:1234"
+        - "4321:1234"
     links:
         - mysql
         - redis

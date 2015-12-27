@@ -1,0 +1,40 @@
+mysql:
+    build: ./mysql
+    expose:
+        - "3306"
+    ports:
+        - "3307:3306"
+    volumes_from:
+        - data
+    environment:
+        - TERM=dumb
+        - MYSQL_HOST=localhost
+        - MYSQL_USER=root
+        - MYSQL_PASS=Shanghai!1
+
+book:
+    build: ./book
+    expose:
+        - "80"
+    ports:
+        - "80:80"
+    links:
+        - mysql
+    volumes_from:
+        - data
+    environment:
+        - TERM=dumb
+
+data:
+    build: ./data
+    volumes:
+        - $HOME/Data/book/logs/nginx/:/var/log/nginx/
+        - $HOME/Data/book/logs/php-fpm/:/var/log/php-fpm/
+        - $HOME/Data/mls/logs/mysql/:/var/log/mysql/
+        - $HOME/Data/mls/data/mysql/:/var/lib/mysql/
+        - $HOME/Public/book/newMem:/usr/share/nginx/html/
+    environment:
+        - TERM=dumb
+
+
+
