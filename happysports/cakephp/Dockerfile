@@ -6,17 +6,12 @@ MAINTAINER Eric King <jinqiqiqi@gamil.com>
 # RUN curl https://bintray.com/sbt/rpm/rpm | tee /etc/yum.repos.d/bintray-sbt-rpm.repo
 ADD ./conf/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo
 
-RUN ["rpm", "--import", "/etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7"]
-RUN yum clean all
-RUN yum -y update
-
-RUN yum install -y php php-mbstring php-intl phpMyAdmin php-fpm php-mbstring php-mysql php-gd php-imap php-soap php-xmlrpc php-pecl-redis supervisor nginx wget unzip
+RUN rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7 && yum clean all && yum -y update && yum install -y php php-mbstring php-intl phpMyAdmin php-fpm php-mbstring php-mysql php-gd php-imap php-soap php-xmlrpc php-pecl-redis supervisor nginx wget unzip
 
 ADD ./conf/hpp.conf /etc/nginx/conf.d/hpp.conf
 ADD ./conf/hpp.ini /etc/supervisord.d/hpp.ini
 
 RUN echo "daemon off;">> /etc/nginx/nginx.conf
-
 
 RUN sed -e 's/nodaemon=false/nodaemon=true/' \
 	-e 's/;\[inet_http_server\]/\[inet_http_server\]/' \
@@ -47,7 +42,6 @@ RUN sed -e 's/127.0.0.1:9000/9000/' \
 
 RUN echo "php_value[session.name] = \"HAPPYSPORTS_SESSION\"" >> /etc/php-fpm.d/www.conf
 RUN echo "php_value[session.gc_maxlifetime] = 3600" >> /etc/php-fpm.d/www.conf
-
 
 EXPOSE 80
 

@@ -5,12 +5,7 @@ MAINTAINER Eric King <jinqiqiqi@gamil.com>
 ###### static lines
 ADD ./conf/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo
 
-RUN ["rpm", "--import", "/etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7"]
-RUN yum clean all
-RUN yum -y update
-
-RUN yum install -y redis supervisor
-
+RUN rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7 && yum clean all && yum -y update && yum install -y redis supervisor
 
 RUN sed -e 's/bind 127.0.0.1/bind 0.0.0.0/' \
 		-i /etc/redis.conf

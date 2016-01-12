@@ -6,12 +6,9 @@ MAINTAINER Eric King <jinqiqiqi@gamil.com>
 # RUN curl https://bintray.com/sbt/rpm/rpm | tee /etc/yum.repos.d/bintray-sbt-rpm.repo
 ADD ./conf/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo
 
-RUN ["rpm", "--import", "/etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7"]
-RUN ["yum", "clean", "all"]
-RUN ["yum", "-y", "update"]
+RUN rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7 && yum clean all && yum -y update && yum install -y wget unzip axel supervisor
 
 # RUN yum install -y supervisor wget unzip
-RUN yum install -y wget unzip axel
 
 # RUN sed -e 's/nodaemon=false/nodaemon=true/' \
 # 	-e 's/;\[inet_http_server\]/\[inet_http_server\]/' \
@@ -29,9 +26,7 @@ RUN axel -n 10 -a http://ftp.heanet.ie/mirrors/funtoo/distfiles/oracle-java/jdk-
 RUN axel -n 10 -a http://downloads.typesafe.com/scala/2.11.7/scala-2.11.7.tgz
 RUN wget -c --tries=20 https://dl.bintray.com/sbt/native-packages/sbt/0.13.8/sbt-0.13.8.tgz
 
-RUN tar -zxf jdk-8u66-linux-x64.tar.gz -C /opt/
-RUN tar -zxf scala-2.11.7.tgz -C /opt/
-RUN tar -zxf sbt-0.13.8.tgz -C /opt/
+RUN tar -zxf jdk-8u66-linux-x64.tar.gz -C /opt/ && tar -zxf scala-2.11.7.tgz -C /opt/ && tar -zxf sbt-0.13.8.tgz -C /opt/
 
 RUN alternatives --install /usr/bin/java java /opt/jdk1.8.0_66/bin/java 2 
 RUN alternatives --install /usr/bin/javaws javaws /opt/jdk1.8.0_66/bin/javaws 2 
@@ -60,8 +55,6 @@ RUN echo "export PATH=\$PATH:\$SCALA_HOME/bin" >> /etc/profile
 
 
 RUN source /etc/profile
-
-RUN yum install -y supervisor
 
 RUN sed -e 's/nodaemon=false/nodaemon=true/' \
 	-e 's/;\[inet_http_server\]/\[inet_http_server\]/' \
