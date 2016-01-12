@@ -22,7 +22,6 @@ RUN yum install -y wget unzip axel
 
 ### installing for java
 
-WORKDIR /opt/
 
 # RUN wget -c --tries=20 --no-cookies --no-check-certificate --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" "http://download.oracle.com/otn-pub/java/jdk/8u66-b17/jdk-8u66-linux-x64.tar.gz"
 # RUN wget -c --tries=20 https://www.reucon.com/cdn/java/jdk-8u66-linux-x64.tar.gz
@@ -71,6 +70,7 @@ RUN sed -e 's/nodaemon=false/nodaemon=true/' \
 	-e 's/;password=123/password=123/' \
 	-i /etc/supervisord.conf
 
+WORKDIR /var/lib/mls/
 EXPOSE 1234
 
 ENTRYPOINT ["/usr/bin/supervisord"]
