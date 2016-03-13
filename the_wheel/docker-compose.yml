@@ -1,0 +1,55 @@
+redis:
+    build: ./redis
+    expose:
+        - "6379"
+    ports:
+        - "6379:6379"
+    volumes_from:
+        - files
+    environment:
+        - TERM=dumb
+
+mysql:
+    build: ./mysql
+    expose:
+        - "3306"
+    ports:
+        - "3306:3306"
+    volumes_from:
+        - files
+    environment:
+        - TERM=dumb
+        - MYSQL_HOST=127.0.0.1
+        - MYSQL_USER=root
+        - MYSQL_PASS=pass
+
+nginx_php:
+    build: ./nginx_php
+    expose:
+        - "80"
+    ports:
+        - "80:80"
+    links:
+        - mysql
+        - redis
+    volumes_from:
+        - files
+    environment:
+        - TERM=dumb
+
+files:
+    build: ./files
+    volumes:
+        - $HOME/Data/wheel/logs/nginx/:/var/log/nginx/
+        - $HOME/Data/wheel/logs/php-fpm/:/var/log/php-fpm/
+        - $HOME/Data/wheel/logs/redis/:/var/log/redis/
+        - $HOME/Data/wheel/logs/mysql/:/var/log/mysql/
+        - $HOME/Data/wheel/data/mysql/:/var/lib/mysql/
+        - $HOME/Data/wheel/data/redis/:/var/lib/redis/
+        - $HOME/Public:/usr/share/nginx/html/
+        - $HOME/Public/wheel:/var/lib/mls/
+    environment:
+        - TERM=dumb
+
+
+
