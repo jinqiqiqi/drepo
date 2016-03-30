@@ -23,8 +23,8 @@ mysql:
         - MYSQL_USER=root
         - MYSQL_PASS=pass
 
-nginx_php:
-    build: ./nginx_php
+nginxphp:
+    build: ./nginxphp
     expose:
         - "80"
     ports:

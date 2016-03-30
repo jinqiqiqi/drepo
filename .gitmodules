@@ -1,0 +1,3 @@
+[submodule "hppdocker"]
+	path = hppdocker
+	url = git@git.oschina.net:happysports/dockers.git
