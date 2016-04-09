@@ -33,6 +33,7 @@ cakephp:
         - mysql
         - redis
         - scala
+        # - search
     volumes_from:
         - datastorage
     environment:
@@ -43,14 +44,29 @@ scala:
     expose:
         - "1234"
     ports:
-        - "4321:1234"
+        - "1234:1234"
     links:
         - mysql
         - redis
+        # - search
     volumes_from:
         - datastorage
     environment:
         - TERM=dumb
+
+search:
+    build: ./search
+    expose:
+        - "9200"
+        - "9300"
+    ports:
+        - "9200:9200"
+        - "9300:9300"
+    volumes_from:
+        - datastorage
+    environment:
+        - TERM=dumb
+
 
 datastorage:
     build: ./data
@@ -59,6 +75,8 @@ datastorage:
         - $HOME/Data/mls/logs/php-fpm/:/var/log/php-fpm/
         - $HOME/Data/mls/logs/redis/:/var/log/redis/
         - $HOME/Data/mls/logs/mysql/:/var/log/mysql/
+        - $HOME/Data/mls/logs/elasticsearch/:/var/log/elasticsearch/
+        - $HOME/Data/mls/data/elasticsearch/:/var/lib/elasticsearch/
         - $HOME/Data/mls/data/mysql/:/var/lib/mysql/
         - $HOME/Data/mls/data/redis/:/var/lib/redis/
         - $HOME/Public:/usr/share/nginx/html/
