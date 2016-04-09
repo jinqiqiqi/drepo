@@ -48,7 +48,7 @@ scala:
     links:
         - mysql
         - redis
-        # - search
+        - search
     volumes_from:
         - datastorage
     environment:
