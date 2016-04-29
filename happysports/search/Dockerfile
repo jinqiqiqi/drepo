@@ -17,6 +17,8 @@ RUN tar zxvf /opt/elasticsearch-2.3.1.tar.gz -C /opt/
 RUN sed -e 's/#\ network\.host\:\ 192\.168\.0\.1/network\.host\:\ \_site\_/' \
 	-i /opt/elasticsearch-2.3.1/config/elasticsearch.yml
 
+RUN /opt/elasticsearch-2.3.1/bin/plugin install analysis-smartcn
+
 ADD ./conf/hpp.ini /etc/supervisord.d/hpp.ini
 EXPOSE 9200 9300
 
