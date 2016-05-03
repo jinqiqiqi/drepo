@@ -6,12 +6,12 @@ MAINTAINER Eric King <jinqiqiqi@gamil.com>
 # RUN curl https://bintray.com/sbt/rpm/rpm | tee /etc/yum.repos.d/bintray-sbt-rpm.repo
 ADD ./conf/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo
 
-RUN rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7 && yum clean all && yum -y update && yum install -y php php-mbstring php-intl phpMyAdmin php-fpm php-mbstring php-mysql php-gd php-imap php-soap php-xmlrpc php-pecl-redis supervisor nginx wget unzip
+RUN rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7 && yum clean all && yum -y update && yum install -y php php-mbstring php-intl phpMyAdmin php-fpm php-mbstring php-mysql php-gd php-imap php-soap php-xmlrpc php-pecl-redis php-pgsql php-pecl-apcu php-twig-extensions php-twig php-pecl-ssh2 supervisor nginx wget unzip
 
-ADD ./conf/hpp.conf /etc/nginx/conf.d/hpp.conf
+# ADD ./conf/hpp.conf /etc/nginx/conf.d/hpp.conf
 ADD ./conf/hpp.ini /etc/supervisord.d/hpp.ini
 
-RUN echo "daemon off;">> /etc/nginx/nginx.conf
+RUN echo "daemon off;">> /etc/nginx/nginx.conf 
 
 RUN sed -e 's/nodaemon=false/nodaemon=true/' \
 	-e 's/;\[inet_http_server\]/\[inet_http_server\]/' \
@@ -23,6 +23,8 @@ RUN sed -e 's/nodaemon=false/nodaemon=true/' \
 RUN sed -e 's/daemonize = no/daemonize = yes/' \
 	-e 's/;date.timezone =/date.timezone = "Asia\/Shanghai"/' \
 	-e 's/display_errors = Off/display_errors = On/' \
+	-e 's/expose_php = On/expose_php = Off/' \
+	-e 's/allow_url_fopen = On/allow_url_fopen = Off/' \
 
 	-e 's/session.name = PHPSESSID/session.name = HAPPYSPORTS_SESSION/' \
 	-e 's/session.save_handler = files/session.save_handler = redis/' \
