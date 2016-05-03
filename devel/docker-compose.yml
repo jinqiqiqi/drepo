@@ -5,9 +5,10 @@ redis:
     ports:
         - "6379:6379"
     volumes_from:
-        - files
+        - data
     environment:
         - TERM=dumb
+
 
 mysql:
     build: ./mysql
@@ -16,15 +17,16 @@ mysql:
     ports:
         - "3306:3306"
     volumes_from:
-        - files
+        - data
     environment:
         - TERM=dumb
         - MYSQL_HOST=127.0.0.1
         - MYSQL_USER=root
         - MYSQL_PASS=pass
 
-nginxphp:
-    build: ./nginxphp
+
+php:
+    build: ./php
     expose:
         - "80"
     ports:
@@ -33,23 +35,21 @@ nginxphp:
         - mysql
         - redis
     volumes_from:
-        - files
+        - data
     environment:
         - TERM=dumb
 
-files:
-    build: ./files
+
+data:
+    build: ./data
     volumes:
-        - $HOME/Data/wheel/logs/nginx/:/var/log/nginx/
-        - $HOME/Data/wheel/logs/php-fpm/:/var/log/php-fpm/
-        - $HOME/Data/wheel/logs/redis/:/var/log/redis/
-        - $HOME/Data/wheel/logs/mysql/:/var/log/mysql/
-        - $HOME/Data/wheel/data/mysql/:/var/lib/mysql/
-        - $HOME/Data/wheel/data/redis/:/var/lib/redis/
+        - $HOME/Data/devel/logs/nginx/:/var/log/nginx/
+        - $HOME/Data/devel/logs/php-fpm/:/var/log/php-fpm/
+        - $HOME/Data/devel/logs/redis/:/var/log/redis/
+        - $HOME/Data/devel/logs/mysql/:/var/log/mysql/
+        - $HOME/Data/devel/data/mysql/:/var/lib/mysql/
+        - $HOME/Data/devel/data/redis/:/var/lib/redis/
         - $HOME/Public:/usr/share/nginx/html/
-        - $HOME/Public/wheel:/var/lib/mls/
+        - ./php/conf/conf.d/:/etc/nginx/conf.d/
     environment:
         - TERM=dumb
-
-
-

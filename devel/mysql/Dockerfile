@@ -9,7 +9,7 @@ ADD ./conf/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo
 RUN rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7 && yum clean all && yum -y update && yum install -y mariadb-server supervisor
 
 # 初始化数据库
-RUN sed -e 's/\[mysqld\]/\[mysqld\]\nlower_case_table_names=1\ncharacter_set_server=utf8\ncollation_server=utf8_general_ci\n/' \
+RUN sed -e 's/\[mysqld\]/\[mysqld\]\nlower_case_table_names=1\ncharacter_set_server=utf8\ncollation_server=utf8_general_ci\nmax_allowed_packet=90M\n/' \
 		-e 's/!includedir\ \/etc\/my.cnf.d/!includedir\ \/etc\/my\.cnf\.d\n\n\[client\]\ndefault\-character\-set=utf8\n\[mysql\]\ndefault\-character\-set=utf8\n/' \
 		-i /etc/my.cnf
 

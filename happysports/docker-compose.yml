@@ -33,7 +33,7 @@ cakephp:
         - mysql
         - redis
         - scala
-        # - search
+        - search
     volumes_from:
         - datastorage
     environment:
@@ -83,6 +83,3 @@ datastorage:
         - $HOME/Public/mls:/var/lib/mls/
     environment:
         - TERM=dumb
-
-
-
