@@ -6,7 +6,8 @@ MAINTAINER Eric King <jinqiqiqi@gamil.com>
 # RUN curl https://bintray.com/sbt/rpm/rpm | tee /etc/yum.repos.d/bintray-sbt-rpm.repo
 ADD ./conf/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo
 
-RUN rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7 && yum clean all && yum -y update && yum install -y php php-mbstring php-intl phpMyAdmin php-fpm php-mbstring php-mysql php-gd php-imap php-soap php-xmlrpc php-pecl-redis supervisor nginx wget unzip
+RUN rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7 && yum clean all && yum -y update 
+RUN yum install -y php php-mbstring php-intl phpMyAdmin php-fpm php-mbstring php-mysql php-gd php-imap php-soap php-xmlrpc php-pecl-redis supervisor nginx wget unzip
 
 ADD ./conf/hpp.conf /etc/nginx/conf.d/hpp.conf
 ADD ./conf/hpp.ini /etc/supervisord.d/hpp.ini

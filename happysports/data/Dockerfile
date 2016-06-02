@@ -16,7 +16,7 @@ RUN sed -e 's/nodaemon=false/nodaemon=true/' \
 	-e 's/;password=123/password=123/' \
 	-i /etc/supervisord.conf
 
-VOLUME ["/usr/share/nginx/html/", "/var/lib/mysql/", "/var/lib/redis/", "/var/log/nginx/", "/var/log/php-fpm/", "/var/log/redis/", "/var/log/mysql/", "/var/lib/mls/"]
+VOLUME ["/usr/share/nginx/html/", "/var/lib/mysql/", "/var/lib/redis/", "/var/log/nginx/", "/var/log/php-fpm/", "/var/log/redis/", "/var/log/mysql/", "/var/lib/mls/", "/data/files/media/"]
 # EXPOSE 6379
 
 ENTRYPOINT ["/usr/bin/supervisord"]
