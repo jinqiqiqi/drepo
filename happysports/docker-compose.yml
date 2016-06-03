@@ -82,6 +82,7 @@ datastorage:
         - $HOME/Data/mls/data/redis/:/var/lib/redis/
         - $HOME/Public:/usr/share/nginx/html/
         - $HOME/Public/mls:/var/lib/mls/
+        - /etc/localtime:/etc/localtime:ro
     environment:
         - TERM=dumb
 
