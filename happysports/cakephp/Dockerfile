@@ -24,6 +24,7 @@ RUN sed -e 's/nodaemon=false/nodaemon=true/' \
 RUN sed -e 's/daemonize = no/daemonize = yes/' \
 	-e 's/;date.timezone =/date.timezone = "Asia\/Shanghai"/' \
 	-e 's/display_errors = Off/display_errors = On/' \
+	-e 's/upload_max_filesize = 2M/upload_max_filesize = 10M/' \
 
 	-e 's/session.name = PHPSESSID/session.name = HAPPYSPORTS_SESSION/' \
 	-e 's/session.save_handler = files/session.save_handler = redis/' \
