@@ -1,0 +1,17 @@
+jenkins:
+    build: ./jenkins
+    expose:
+        - "50000"
+        - "8080"
+    ports:
+        - "8080:8080"
+        - "50000:50000"
+    # links:
+    #     - mysql
+    # volumes_from:
+    #     - datastorage
+    environment:
+        - TERM=dumb
+    volumes:
+    - $HOME/Data/jenkins/:/var/jenkins_home/
+
