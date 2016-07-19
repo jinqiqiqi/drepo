@@ -40,19 +40,19 @@ cakephp:
         - TERM=dumb
 
 scala:
-    build: ./scala
-    expose:
-        - "1234"
-    ports:
-        - "1234:1234"
-    links:
-        - mysql
-        - redis
-        - search
-    volumes_from:
-        - datastorage
-    environment:
-        - TERM=dumb
+   build: ./scala
+   expose:
+       - "1234"
+   ports:
+       - "1234:1234"
+   links:
+       - mysql
+       - redis
+       - search
+   volumes_from:
+       - datastorage
+   environment:
+       - TERM=dumb
 
 search:
     build: ./search
@@ -75,8 +75,10 @@ datastorage:
         - $HOME/Data/mls/logs/php-fpm/:/var/log/php-fpm/
         - $HOME/Data/mls/logs/redis/:/var/log/redis/
         - $HOME/Data/mls/logs/mysql/:/var/log/mysql/
-        - $HOME/Data/mls/logs/elasticsearch/:/var/log/elasticsearch/
-        - $HOME/Data/mls/data/elasticsearch/:/var/lib/elasticsearch/
+        - $HOME/Data/mls/logs/elasticsearch/:/opt/elasticsearch-2.3.4/logs/
+        - $HOME/Data/mls/data/elasticsearch/:/opt/elasticsearch-2.3.4/data/
+        # - $HOME/Data/mls/conf/elasticsearch/dict/:/opt/elasticsearch-2.3.4/plugins/ik/config/
+        - $HOME/Data/mls/conf/elasticsearch/conf/:/opt/elasticsearch-2.3.4/config/
         - $HOME/Data/mls/data/mysql/:/var/lib/mysql/
         - $HOME/Data/mls/data/media/:/data/files/media/
         - $HOME/Data/mls/data/redis/:/var/lib/redis/

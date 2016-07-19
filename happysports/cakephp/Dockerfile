@@ -14,6 +14,9 @@ ADD ./conf/hpp.ini /etc/supervisord.d/hpp.ini
 
 RUN echo "daemon off;">> /etc/nginx/nginx.conf
 
+RUN sed -e 's/http {/http {\nclient_max_body_size 10m;\n/' \
+	-i /etc/nginx/nginx.conf 
+
 RUN sed -e 's/nodaemon=false/nodaemon=true/' \
 	-e 's/;\[inet_http_server\]/\[inet_http_server\]/' \
 	-e 's/;port=127.0.0.1:9001/port=*:9001/' \
@@ -36,10 +39,13 @@ RUN sed -e 's/127.0.0.1:9000/9000/' \
 		-e '/allowed_clients/d' \
 		-e '/catch_workers_output/s/^;//' \
 		-e '/error_log/d' \
-
+		
+		-e 's/;request_slowlog_timeout = 0/request_slowlog_timeout = 1/' \
 		-e 's/php_value\[session.save_handler\] = files/php_value\[session.save_handler\] = redis/' \
 		-e 's/php_value\[session.save_path\] = \/var\/lib\/php\/session/php_value\[session.save_path\] = "tcp:\/\/redis:6379?weight=1\&timeout=60\&database=10\&prefix=HAPPYSPORTS_SESSION"/' \
 		-i /etc/php-fpm.d/www.conf
+
+WORKDIR /usr/share/nginx/html/
 
 
 RUN echo "php_value[session.name] = \"HAPPYSPORTS_SESSION\"" >> /etc/php-fpm.d/www.conf
