@@ -24,6 +24,7 @@ RUN sed -e 's/daemonize = no/daemonize = yes/' \
 	-e 's/;date.timezone =/date.timezone = "Asia\/Shanghai"/' \
 	-e 's/display_errors = Off/display_errors = On/' \
 	-e 's/expose_php = On/expose_php = Off/' \
+	-e 's/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=1/' \
 	-e 's/allow_url_fopen = On/allow_url_fopen = Off/' \
 
 	-e 's/session.name = PHPSESSID/session.name = HAPPYSPORTS_SESSION/' \
