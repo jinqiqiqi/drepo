@@ -9,7 +9,7 @@ RUN yum install -y  cmake cmake3 cpp enca gcc-c++ git glog-devel gperf libjpeg-t
 RUN mkdir -p /opt/src/hhvm && git clone https://github.com/facebook/hhvm.git --depth=1 /opt/src/hhvm
 RUN cd /opt/src/hhvm/ && git submodule update --init --recursive 
 
-RUN cmake3 .
-RUN make 
-RUN make install 
+RUN cd /opt/src/hhvm/ && cmake3 .
+RUN cd /opt/src/hhvm/ && make 
+RUN cd /opt/src/hhvm/ && make install 
 
