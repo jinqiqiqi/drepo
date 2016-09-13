@@ -12,6 +12,10 @@ RUN sed -e 's/post_max_size\ =\ 8M/post_max_size\ =\ 16M/' \
 	-e 's/max_input_time\ =\ 60/max_input_time\ =\ 300/' \
 	-e 's/;date.timezone\ =/date.timezone\ =\ Asia\/Shanghai/' \
 	-i /etc/php.ini
+
+RUN sed -e 's/#\ DBHost=localhost/DBHost=mysql/' \
+    -e 's/#\ DBPassword=/DBPassword=pass/' \
+    -i /etc/zabbix_server.conf
 	
 
 # RUN mkdir -p /etc/supervisord.d/
