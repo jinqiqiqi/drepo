@@ -2,9 +2,20 @@ zabbix:
     build: ./zabbix
     expose:
         - "80"
-        - "3306"
     ports:
         - "80:80"
+    links:
+        - mysql
+    volumes_from:
+        - datastorage
+    environment:
+        - TERM=dumb
+
+mysql:
+    build: ./mysql
+    expose:
+        - "3306"
+    ports:
         - "3306:3306"
     volumes_from:
         - datastorage
