@@ -26,7 +26,7 @@ RUN yum install -y mysql-server zabbix22 zabbix22-proxy zabbix22-web-mysql zabbi
 
 # ADD ./conf/zabbix.ini /etc/supervisord.d/zabbix.ini
 
-EXPOSE 80 3306
+EXPOSE 80
 
 ENTRYPOINT ["/usr/sbin/httpd", "-D", "FOREGROUND"]
 
