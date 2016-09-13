@@ -7,7 +7,9 @@ RUN rpm -ivh https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.
 
 RUN yum install -y mysql-server
 
+VOLUME ["/var/lib/mysql/"]
+
 EXPOSE 3306
 
-ENTRYPOINT ["/usr/sbin/mysqld"]
+CMD ["/usr/bin/mysqld_safe"]
 
