@@ -1,3 +1,4 @@
+
 zabbix:
     build: ./zabbix
     expose:
@@ -5,7 +6,7 @@ zabbix:
     ports:
         - "80:80"
     links:
-        - mysql
+        - mysql:mysql
     volumes_from:
         - datastorage
     environment:
@@ -17,6 +18,8 @@ mysql:
         - "3306"
     ports:
         - "3306:3306"
+    # links:
+    #     - zabbix:offit
     volumes_from:
         - datastorage
     environment:
@@ -28,6 +31,7 @@ datastorage:
         - $HOME/Data/mls/logs/mysql/:/var/log/mysql/
         - $HOME/Data/mls/data/mysql/:/var/lib/mysql/
         - /etc/localtime:/etc/localtime:ro
+        - $HOME/Data/zabbix/conf/zabbix.conf.php:/etc/zabbix/web/zabbix.conf.php
     environment:
         - TERM=dumb
 
