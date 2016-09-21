@@ -30,7 +30,6 @@ RUN sed -e 's/daemonize = no/daemonize = yes/' \
 	-e 's/expose_php = On/expose_php = Off/' \
 	-e 's/allow_url_fopen = Off/allow_url_fopen = On/' \
 	-e 's/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=1/' \
-	-e 's/allow_url_fopen = On/allow_url_fopen = Off/' \
 
 	-e 's/session.name = PHPSESSID/session.name = HAPPYSPORTS_SESSION/' \
 	-e 's/session.save_handler = files/session.save_handler = redis/' \
@@ -44,12 +43,14 @@ RUN sed -e 's/127.0.0.1:9000/9000/' \
 		-e '/error_log/d' \
 
 		-e 's/php_value\[session.save_handler\] = files/php_value\[session.save_handler\] = redis/' \
-		-e 's/php_value\[session.save_path\] = \/var\/lib\/php\/session/php_value\[session.save_path\] = "tcp:\/\/redis:6379?weight=1\&timeout=60\&database=10\&prefix=HAPPYSPORTS_SESSION"/' \
+		-e 's/php_value\[session.save_path\]    = \/var\/opt\/remi\/php71\/lib\/php\/session/php_value\[session.save_path\] = "tcp:\/\/redis:6379?weight=1\&timeout=60\&database=10\&prefix=HAPPYSPORTS_SESSION"/' \
 		-i /etc/opt/remi/php71/php-fpm.d/www.conf
 
 
 RUN echo "php_value[session.name] = \"HAPPYSPORTS_SESSION\"" >> /etc/opt/remi/php71/php-fpm.d/www.conf
 RUN echo "php_value[session.gc_maxlifetime] = 3600" >> /etc/opt/remi/php71/php-fpm.d/www.conf
+
+RUN ln -s /usr/bin/php71 /usr/bin/php
 
 EXPOSE 80
 
