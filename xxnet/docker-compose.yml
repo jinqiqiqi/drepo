@@ -1,0 +1,16 @@
+xxnet:
+  build: ./xxnet
+  expose:
+    - 8087
+    - 8086
+    - 8085
+    - 1080
+
+  ports:
+    - 8087:8087
+    - 8085:8085
+    - 8086:8086
+    - 1080:1080
+
+  environment:
+    - TERM=dumb
