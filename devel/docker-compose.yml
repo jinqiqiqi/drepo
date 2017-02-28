@@ -9,7 +9,6 @@ redis:
     environment:
         - TERM=dumb
 
-
 mysql:
     build: ./mysql
     expose:
@@ -24,13 +23,12 @@ mysql:
         - MYSQL_USER=root
         - MYSQL_PASS=pass
 
-
 php:
     build: ./php
     expose:
-        - "80"
+        - "9000"
     ports:
-        - "80:80"
+        - "9000:9000"
     links:
         - mysql
         - redis
@@ -38,6 +36,20 @@ php:
         - data
     environment:
         - TERM=dumb
+
+nginx:
+    build: ./nginx
+    expose:
+        - "80"
+    ports:
+        - "80:80"
+    links:
+        - php
+    volumes_from:
+        - data
+    environment:
+        - TERM=dumb
+
 
 
 data:
@@ -50,6 +62,6 @@ data:
         - $HOME/Data/devel/data/mysql/:/var/lib/mysql/
         - $HOME/Data/devel/data/redis/:/var/lib/redis/
         - $HOME/Public:/usr/share/nginx/html/
-        - ./php/conf/conf.d/:/etc/nginx/conf.d/
+        - ./nginx/files/conf/:/etc/nginx/conf.d/
     environment:
         - TERM=dumb
