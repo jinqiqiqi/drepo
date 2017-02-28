@@ -30,7 +30,7 @@ php:
     ports:
         - "9000:9000"
     links:
-        - mysql
+        - mysql:www.mysql.io
         - redis
     volumes_from:
         - data
