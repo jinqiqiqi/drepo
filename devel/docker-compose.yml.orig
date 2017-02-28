@@ -1,5 +1,6 @@
 version: '2'
 
+<<<<<<< HEAD
 services:
     redis:
         build: ./redis
@@ -56,3 +57,61 @@ services:
             - ./php/conf/conf.d/:/etc/nginx/conf.d/
         environment:
             - TERM=dumb
+=======
+mysql:
+    build: ./mysql
+    expose:
+        - "3306"
+    ports:
+        - "3306:3306"
+    volumes_from:
+        - data
+    environment:
+        - TERM=dumb
+        - MYSQL_HOST=127.0.0.1
+        - MYSQL_USER=root
+        - MYSQL_PASS=pass
+
+php:
+    build: ./php
+    expose:
+        - "9000"
+    ports:
+        - "9000:9000"
+    links:
+        - mysql
+        - redis
+    volumes_from:
+        - data
+    environment:
+        - TERM=dumb
+
+nginx:
+    build: ./nginx
+    expose:
+        - "80"
+    ports:
+        - "80:80"
+    links:
+        - php
+    volumes_from:
+        - data
+    environment:
+        - TERM=dumb
+
+
+
+data:
+    build: ./data
+    volumes:
+        - $HOME/Data/devel/logs/nginx/:/var/log/nginx/
+        - $HOME/Data/devel/logs/php-fpm/:/var/log/php-fpm/
+        - $HOME/Data/devel/logs/redis/:/var/log/redis/
+        - $HOME/Data/devel/logs/mysql/:/var/log/mysql/
+        - $HOME/Data/devel/data/mysql/:/var/lib/mysql/
+        - $HOME/Data/devel/data/redis/:/var/lib/redis/
+        - $HOME/Public:/usr/share/nginx/html/
+        - ./nginx/files/conf/:/etc/nginx/conf.d/
+    environment:
+        - TERM=dumb
+>>>>>>> 712d093... disable supervisor.
