@@ -7,6 +7,8 @@ RUN git clone https://github.com/jinqiqiqi/XX-Net.git /opt/XX-Net/
 
 WORKDIR /opt/XX-Net/
 
-EXPOSE 8085 8086 8087 1080 
+ADD ./manual.ini /opt/XX-Net/data/gae_proxy/manual.ini
+
+EXPOSE 8085 8086 8087 1080
 
 ENTRYPOINT ["/opt/XX-Net/start"]
