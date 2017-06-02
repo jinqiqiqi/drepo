@@ -1,0 +1,15 @@
+web:
+  image: 'gitlab/gitlab-ce:latest'
+  restart: always
+  hostname: 'gitlab.docker'
+  environment:
+    GITLAB_OMNIBUS_CONFIG: |
+      external_url 'http://gitlab.docker'
+      # Add any other gitlab.rb configuration here, each on its own line
+  ports:
+    - '80:80'
+    - '22:22'
+  volumes:
+    - '$HOME/Data/gitlab/config:/etc/gitlab'
+    - '$HOME/Data/gitlab/logs:/var/log/gitlab'
+    - '$HOME/Data/gitlab/data:/var/opt/gitlab'
