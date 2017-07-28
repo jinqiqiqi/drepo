@@ -1,44 +1,53 @@
-namenode:
-    build: ./namenode
-    # expose:
-    #     - "6379"
-    # ports:
-    #     - "6379:6379"
-    # volumes_from:
-    #     - datastorage
-    environment:
-        - TERM=dumb
+version: '3'
+services:
+    namenode:
+        build: ./namenode
+        expose:
+            - "22"
+        ports:
+            - "222:22"
+        # volumes_from:
+        #     - datastorage
+        # links:
+        #     - datanode
+        environment:
+            - TERM=dumb
 
-datanode:
-    build: ./datanode
-    # expose:
-    #     - "3306"
-    # ports:
-    #     - "3306:3306"
-    # volumes_from:
-    #     - datastorage
-    environment:
-        - TERM=dumb
+    datanode:
+        build: ./datanode
+        expose:
+            - "22"
+        ports:
+            - "223:22"
+        # volumes_from:
+        #     - datastorage
+        # deploy:
+        #     mode: replicated
+        #     replicas: 2
+        links:
+            - namenode
+        environment:
+            - TERM=dumb
 
-# datastorage:
-#     build: ./data
-#     volumes:
-#         - $HOME/Data/mls/logs/nginx/:/var/log/nginx/
-#         - $HOME/Data/mls/logs/php-fpm/:/var/log/php-fpm/
-#         - $HOME/Data/mls/logs/redis/:/var/log/redis/
-#         - $HOME/Data/mls/logs/mysql/:/var/log/mysql/
-#         - $HOME/Data/mls/logs/elasticsearch/:/opt/elasticsearch-2.3.4/logs/
-#         - $HOME/Data/mls/data/elasticsearch/:/opt/elasticsearch-2.3.4/data/
-#         # - $HOME/Data/mls/conf/elasticsearch/dict/:/opt/elasticsearch-2.3.4/plugins/ik/config/
-#         - $HOME/Data/mls/conf/elasticsearch/conf/:/opt/elasticsearch-2.3.4/config/
-#         - $HOME/Data/mls/data/mysql/:/var/lib/mysql/
-#         - $HOME/Data/mls/data/media/:/data/files/media/
-#         - $HOME/Data/mls/data/redis/:/var/lib/redis/
-#         - $HOME/Public:/usr/share/nginx/html/
-#         - $HOME/Public/mls:/var/lib/mls/
-#         - /etc/localtime:/etc/localtime:ro
-#     environment:
-#         - TERM=dumb
+    # datastorage:
+    #     build: ./data
+    #     volumes:
+    #         - $HOME/Data/mls/logs/nginx/:/var/log/nginx/
+    #         - $HOME/Data/mls/logs/php-fpm/:/var/log/php-fpm/
+    #         - $HOME/Data/mls/logs/redis/:/var/log/redis/
+    #         - $HOME/Data/mls/logs/mysql/:/var/log/mysql/
+    #         - $HOME/Data/mls/logs/elasticsearch/:/opt/elasticsearch-2.3.4/logs/
+    #         - $HOME/Data/mls/data/elasticsearch/:/opt/elasticsearch-2.3.4/data/
+    #         # - $HOME/Data/mls/conf/elasticsearch/dict/:/opt/elasticsearch-2.3.4/plugins/ik/config/
+    #         - $HOME/Data/mls/conf/elasticsearch/conf/:/opt/elasticsearch-2.3.4/config/
+    #         - $HOME/Data/mls/data/mysql/:/var/lib/mysql/
+    #         - $HOME/Data/mls/data/media/:/data/files/media/
+    #         - $HOME/Data/mls/data/redis/:/var/lib/redis/
+    #         - $HOME/Public:/usr/share/nginx/html/
+    #         - $HOME/Public/mls:/var/lib/mls/
+    #         - /etc/localtime:/etc/localtime:ro
+    #     environment:
+    #         - TERM=dumb
 
 
 

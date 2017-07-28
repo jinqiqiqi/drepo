@@ -32,7 +32,17 @@ RUN alternatives --install /usr/bin/jps jps /opt/jdk1.8.0_131/bin/jps 2
 RUN echo "" >> /etc/profile
 RUN echo "## Setting JAVA_HOME and PATH for all USERS ##" >> /etc/profile
 RUN echo "export JAVA_HOME=/opt/jdk1.8.0_131" >> /etc/profile
+RUN echo "export CLASSPATH=.:\$JAVA_HOME/lib/dt.jar:\$JAVA_HOME/lib/tools.jar" >> /etc/profile
 RUN echo "export PATH=\$PATH:\$JAVA_HOME/bin" >> /etc/profile
 
+# install sshd-server
+RUN yum install -y openssh-server openssh-clients initscripts
+RUN sed -ri 's/#PermitRootLogin yes/PermitRootLogin yes/g' /etc/ssh/sshd_config
+ADD ./conf/id_rsa.pub /root/.ssh/authorized_keys
+ADD ./conf/id_rsa /root/.ssh/id_rsa
+RUN chmod -R 600 /root/.ssh/ && mkdir /var/run/sshd && /usr/sbin/sshd-keygen
+
+# register sshd as a backend service
+ADD ./conf/sshd.ini /etc/supervisord.d/sshd.ini
 
 ENTRYPOINT ["/usr/bin/supervisord"]
