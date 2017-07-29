@@ -6,7 +6,7 @@ MAINTAINER Eric King <jinqiqiqi@gmail.com>
 RUN ["rpm", "--import", "/etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7"]
 RUN yum install -y epel-release && yum clean all
 RUN ["rpm", "--import", "/etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7"]
-RUN yum install -y supervisor axel unzip
+RUN yum install -y supervisor axel
 
 # setting the userinfo for supervisor
 RUN sed -e 's/nodaemon=false/nodaemon=true/' \
@@ -44,5 +44,22 @@ RUN chmod -R 600 /root/.ssh/ && mkdir /var/run/sshd && /usr/sbin/sshd-keygen
 
 # register sshd as a backend service
 ADD ./conf/sshd.ini /etc/supervisord.d/sshd.ini
+
+
+# install ntp to sync date and time
+
+RUN yum install -y wget ntp ntpdate && ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+RUN /usr/sbin/ntpdate -u pool.ntp.org
+
+
+
+# init clouder-manager.repo and install cloudera manager
+RUN wget http://archive.cloudera.com/cm5/redhat/7/x86_64/cm/cloudera-manager.repo -O /etc/yum.repos.d/cloudera-manager.repo
+RUN rpm --import https://archive.cloudera.com/cm5/redhat/7/x86_64/cm/RPM-GPG-KEY-cloudera
+RUN yum install -y cloudera-manager-agent cloudera-manager-server cloudera-manager-server-db-2
+
+
+
+EXPOSE 22
 
 ENTRYPOINT ["/usr/bin/supervisord"]

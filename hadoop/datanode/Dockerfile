@@ -45,4 +45,6 @@ RUN chmod -R 600 /root/.ssh/ && mkdir /var/run/sshd && /usr/sbin/sshd-keygen
 # register sshd as a backend service
 ADD ./conf/sshd.ini /etc/supervisord.d/sshd.ini
 
+EXPOSE 22
+
 ENTRYPOINT ["/usr/bin/supervisord"]
