@@ -45,21 +45,19 @@ RUN chmod -R 600 /root/.ssh/ && mkdir /var/run/sshd && /usr/sbin/sshd-keygen
 # register sshd as a backend service
 ADD ./conf/sshd.ini /etc/supervisord.d/sshd.ini
 
-
 # install ntp to sync date and time
-
 RUN yum install -y wget ntp ntpdate && ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 RUN /usr/sbin/ntpdate -u pool.ntp.org
 
-
-
 # init clouder-manager.repo and install cloudera manager
-RUN wget http://archive.cloudera.com/cm5/redhat/7/x86_64/cm/cloudera-manager.repo -O /etc/yum.repos.d/cloudera-manager.repo
-RUN rpm --import https://archive.cloudera.com/cm5/redhat/7/x86_64/cm/RPM-GPG-KEY-cloudera
-RUN yum install -y cloudera-manager-agent cloudera-manager-server cloudera-manager-server-db-2
+ADD ./packages/cloudera-manager-centos7-cm5.12.0_x86_64.tar.gz /opt/
+ADD ./packages/mysql-connector-java-6.0.2.jar /opt/cm-5.12.0/share/cmf/lib/
+# RUN . /etc/profile && /opt/cm-5.12.0/share/cmf/schema/scm_prepare_database.sh mysql cm -h172.19.0.2 -uroot -p123123 --scm-host localhost scm scm scm
 
 
 
+# settings for exposing ports
 EXPOSE 22
 
+# entrypoint command
 ENTRYPOINT ["/usr/bin/supervisord"]
