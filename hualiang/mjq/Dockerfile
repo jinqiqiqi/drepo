@@ -10,7 +10,7 @@ RUN ["rpm", "--import", "/etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7"]
 RUN yum clean all
 RUN yum -y update
 
-RUN yum install -y php php-mbstring php-intl phpMyAdmin php-fpm php-mbstring php-mysql php-gd php-imap php-soap php-xmlrpc supervisor nginx
+RUN yum install -y php php-mbstring php-intl phpMyAdmin php-fpm php-mbstring php-mysql php-gd php-imap php-soap php-xmlrpc composer supervisor nginx
 
 ADD ./conf/book.conf /etc/nginx/conf.d/book.conf
 ADD ./conf/book.ini /etc/supervisord.d/book.ini
@@ -48,6 +48,9 @@ RUN sed -e 's/127.0.0.1:9000/9000/' \
 RUN echo "php_value[session.name] = \"ACCOUNTBOOK_SESSION\"" >> /etc/php-fpm.d/www.conf
 RUN echo "php_value[session.gc_maxlifetime] = 3600" >> /etc/php-fpm.d/www.conf
 
+RUN mkdir "/usr/share/nginx/src"
+
+WORKDIR ["/usr/share/nginx/html"]
 
 EXPOSE 80
 EXPOSE 9000
