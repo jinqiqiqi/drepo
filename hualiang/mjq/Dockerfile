@@ -18,8 +18,9 @@ RUN yum install -y php71 php71-build php71-php php71-php-ast php71-php-bcmath ph
 
 RUN yum install -y git
 
-ADD ./conf/book.conf /etc/nginx/conf.d/book.conf
-ADD ./conf/book.ini /etc/supervisord.d/book.ini
+ADD ./conf/mjq.conf /etc/nginx/conf.d/mjq.conf
+ADD ./conf/lite.conf /etc/nginx/conf.d/lite.conf
+ADD ./conf/mjq.ini /etc/supervisord.d/mjq.ini
 
 RUN echo "daemon off;">> /etc/nginx/nginx.conf
 

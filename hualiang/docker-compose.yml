@@ -32,8 +32,11 @@ data:
         - $HOME/Data/mjq/logs/php-fpm/:/var/log/php-fpm/
         - $HOME/Data/mjq/logs/mysql/:/var/log/mysql/
         - $HOME/Data/mjq/data/mysql/:/var/lib/mysql/
-        - $HOME/Public/jobs/meijiequan/public/:/usr/share/nginx/html/
-        - $HOME/Public/jobs/meijiequan/:/usr/share/nginx/
+        - $HOME/Public/jobs/meijiequan/public/:/usr/share/nginx/mjq/html/
+        - $HOME/Public/jobs/meijiequan/:/usr/share/nginx/mjq/
+        - $HOME/Public/jobs/lite-sky-fire/public:/usr/share/nginx/sell/html/
+        - $HOME/Public/jobs/lite-sky-fire/:/usr/share/nginx/sell/
+
     environment:
         - TERM=dumb
 
