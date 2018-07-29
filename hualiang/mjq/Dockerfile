@@ -12,8 +12,11 @@ RUN rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7 /etc/pki/rpm-gpg/RPM-GPG-KE
 RUN yum clean all
 RUN yum -y update 
 
-RUN yum install -y php56 php56-build php56-php php56-php-ast php56-php-bcmath php56-php-cli php56-php-common php56-php-dba php56-php-dbg php56-php-devel php56-php-embedded php56-php-enchant php56-php-fpm php56-php-gd php56-php-gmp php56-php-imap php56-php-interbase php56-php-intl php56-php-json php56-php-ldap php56-php-libvirt php56-php-libvirt-doc php56-php-litespeed php56-php-lz4 php56-php-mbstring php56-php-mcrypt php56-php-mysqlnd  php56-php-odbc php56-php-opcache php56-php-pdo php56-php-pdo-dblib php56-php-pear php56-php-pecl-amqp php56-php-pecl-apcu php56-php-pecl-apcu-bc php56-php-pecl-apcu-devel php56-php-pecl-env php56-php-pecl-ev php56-php-pecl-event php56-php-pecl-gender php56-php-pecl-geoip php56-php-pecl-http php56-php-pecl-http-devel php56-php-pecl-inotify php56-php-pecl-json-post php56-php-pecl-libsodium php56-php-pecl-lua php56-php-pecl-mailparse php56-php-pecl-memcache php56-php-pecl-memcached php56-php-pecl-mysql php56-php-pecl-oauth php56-php-pecl-pcs php56-php-pecl-pcs-devel php56-php-pecl-pq php56-php-pecl-redis php56-php-pecl-scrypt php56-php-pecl-solr2 php56-php-pecl-stats php56-php-pecl-uploadprogress php56-php-pecl-uuid php56-php-pecl-varnish php56-php-pecl-xattr php56-php-pecl-yaml php56-php-pecl-zip php56-php-pgsql php56-php-process php56-php-snmp php56-php-soap  php56-php-tidy php56-php-xml php56-php-xmlrpc php56-runtime composer supervisor nginx
-# composer
+RUN yum install -y php71 php71-build php71-php php71-php-ast php71-php-bcmath php71-php-cli php71-php-common php71-php-dba php71-php-dbg php71-php-devel php71-php-embedded php71-php-enchant php71-php-fpm php71-php-gd php71-php-gmp php71-php-imap php71-php-interbase php71-php-intl php71-php-json php71-php-ldap php71-php-libvirt php71-php-libvirt-doc php71-php-litespeed php71-php-lz4 php71-php-mbstring php71-php-mcrypt php71-php-mysqlnd  php71-php-odbc php71-php-opcache php71-php-pdo php71-php-pdo-dblib php71-php-pear php71-php-pecl-amqp php71-php-pecl-apcu php71-php-pecl-apcu-bc php71-php-pecl-apcu-devel php71-php-pecl-env php71-php-pecl-ev php71-php-pecl-event php71-php-pecl-gender php71-php-pecl-geoip php71-php-pecl-http php71-php-pecl-http-devel php71-php-pecl-inotify php71-php-pecl-json-post php71-php-pecl-libsodium php71-php-pecl-lua php71-php-pecl-mailparse php71-php-pecl-memcache php71-php-pecl-memcached php71-php-pecl-mysql php71-php-pecl-oauth php71-php-pecl-pcs php71-php-pecl-pcs-devel php71-php-pecl-pq php71-php-pecl-redis php71-php-pecl-scrypt php71-php-pecl-solr2 php71-php-pecl-stats php71-php-pecl-uploadprogress php71-php-pecl-uuid php71-php-pecl-varnish php71-php-pecl-xattr php71-php-pecl-yaml php71-php-pecl-zip php71-php-pgsql php71-php-process php71-php-snmp php71-php-soap  php71-php-tidy php71-php-xml php71-php-xmlrpc php71-runtime composer supervisor nginx
+
+# php-phpseclib-crypt-base
+
+RUN yum install -y git
 
 ADD ./conf/book.conf /etc/nginx/conf.d/book.conf
 ADD ./conf/book.ini /etc/supervisord.d/book.ini
@@ -36,7 +39,7 @@ RUN sed -e 's/daemonize = no/daemonize = yes/' \
 	# -e 's/session.save_handler = files/session.save_handler = redis/' \
 	# -e 's/;session.save_path = "\/tmp"/session.save_path = "tcp:\/\/redis:6379?weight=1\&timeout=60\&database=15"/' \
 
-	-i /etc/opt/remi/php56/php.ini
+	-i /etc/opt/remi/php71/php.ini
 
 RUN sed -e 's/127.0.0.1:9000/9000/' \
 		-e '/allowed_clients/d' \
@@ -45,13 +48,13 @@ RUN sed -e 's/127.0.0.1:9000/9000/' \
 
 		# -e 's/php_value\[session.save_handler\] = files/php_value\[session.save_handler\] = redis/' \
 		# -e 's/php_value\[session.save_path\] = \/var\/lib\/php\/session/php_value\[session.save_path\] = "tcp:\/\/redis:6379?weight=1\&timeout=60\&database=10\&prefix=ACCOUNTBOOK_SESSION"/' \
-		-i /etc/opt/remi/php56/php-fpm.d/www.conf
+		-i /etc/opt/remi/php71/php-fpm.d/www.conf
 
 
-RUN echo "php_value[session.name] = \"MJQ_SESSION\"" >> /etc/opt/remi/php56/php-fpm.d/www.conf
-RUN echo "php_value[session.gc_maxlifetime] = 3600" >> /etc/opt/remi/php56/php-fpm.d/www.conf
+RUN echo "php_value[session.name] = \"MJQ_SESSION\"" >> /etc/opt/remi/php71/php-fpm.d/www.conf
+RUN echo "php_value[session.gc_maxlifetime] = 3600" >> /etc/opt/remi/php71/php-fpm.d/www.conf
 
-RUN ln -sf /usr/bin/php56 /usr/bin/php
+RUN ln -sf /usr/bin/php71 /usr/bin/php
 
 
 RUN mkdir "/usr/share/nginx/src"
@@ -60,6 +63,7 @@ WORKDIR /usr/share/nginx/html
 
 EXPOSE 80
 EXPOSE 9000
+EXPOSE 8000
 
 ENTRYPOINT ["/usr/bin/supervisord"]
 
