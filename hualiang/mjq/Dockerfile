@@ -16,8 +16,6 @@ RUN yum install -y php71 php71-build php71-php php71-php-ast php71-php-bcmath ph
 
 # php-phpseclib-crypt-base
 
-RUN yum install -y git
-
 ADD ./conf/mjq.conf /etc/nginx/conf.d/mjq.conf
 ADD ./conf/lite.conf /etc/nginx/conf.d/lite.conf
 ADD ./conf/mjq.ini /etc/supervisord.d/mjq.ini
