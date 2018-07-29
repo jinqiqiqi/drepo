@@ -50,6 +50,7 @@ RUN echo "php_value[session.gc_maxlifetime] = 3600" >> /etc/php-fpm.d/www.conf
 
 
 EXPOSE 80
+EXPOSE 9000
 
 ENTRYPOINT ["/usr/bin/supervisord"]
 
