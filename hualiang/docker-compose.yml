@@ -33,7 +33,7 @@ data:
         - $HOME/Data/mjq/logs/mysql/:/var/log/mysql/
         - $HOME/Data/mjq/data/mysql/:/var/lib/mysql/
         - $HOME/Public/jobs/meijiequan/public/:/usr/share/nginx/html/
-        - $HOME/Public/jobs/meijiequan/:/usr/share/nginx/src/
+        - $HOME/Public/jobs/meijiequan/:/usr/share/nginx/
     environment:
         - TERM=dumb
 
