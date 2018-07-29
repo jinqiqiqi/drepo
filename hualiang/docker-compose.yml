@@ -32,8 +32,8 @@ data:
         - $HOME/Data/mjq/logs/php-fpm/:/var/log/php-fpm/
         - $HOME/Data/mjq/logs/mysql/:/var/log/mysql/
         - $HOME/Data/mjq/data/mysql/:/var/lib/mysql/
-        - $HOME/Public/project/MJQProject/public/:/usr/share/nginx/html/
-        - $HOME/Public/project/MJQProject/:/usr/share/nginx/src/
+        - $HOME/Public/jobs/meijiequan/public/:/usr/share/nginx/html/
+        - $HOME/Public/jobs/meijiequan/:/usr/share/nginx/src/
     environment:
         - TERM=dumb
 

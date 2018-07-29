@@ -51,7 +51,7 @@ RUN sed -e 's/127.0.0.1:9000/9000/' \
 RUN echo "php_value[session.name] = \"MJQ_SESSION\"" >> /etc/opt/remi/php56/php-fpm.d/www.conf
 RUN echo "php_value[session.gc_maxlifetime] = 3600" >> /etc/opt/remi/php56/php-fpm.d/www.conf
 
-RUN ln -s /usr/bin/php56 /usr/bin/php
+RUN ln -sf /usr/bin/php56 /usr/bin/php
 
 
 RUN mkdir "/usr/share/nginx/src"
