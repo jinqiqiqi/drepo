@@ -21,8 +21,10 @@ services:
         build: ./namenode
         expose:
             - "22"
+            - "7180"
         ports:
             - "222:22"
+            - "7180:7180"
         # volumes
         #     - data-volume:/opt/data/
         links:

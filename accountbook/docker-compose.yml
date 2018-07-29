@@ -32,7 +32,7 @@ data:
         - $HOME/Data/book/logs/php-fpm/:/var/log/php-fpm/
         - $HOME/Data/mls/logs/mysql/:/var/log/mysql/
         - $HOME/Data/mls/data/mysql/:/var/lib/mysql/
-        - $HOME/Public/book/newMem:/usr/share/nginx/html/
+        - $HOME/Public/private/book/newMem:/usr/share/nginx/html/
     environment:
         - TERM=dumb
 

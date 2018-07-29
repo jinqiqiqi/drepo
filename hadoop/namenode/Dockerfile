@@ -38,26 +38,40 @@ RUN echo "export PATH=\$PATH:\$JAVA_HOME/bin" >> /etc/profile
 # install sshd-server
 RUN yum install -y openssh-server openssh-clients initscripts
 RUN sed -ri 's/#PermitRootLogin yes/PermitRootLogin yes/g' /etc/ssh/sshd_config
-ADD ./conf/id_rsa.pub /root/.ssh/authorized_keys
-ADD ./conf/id_rsa /root/.ssh/id_rsa
+COPY ./conf/id_rsa.pub /root/.ssh/authorized_keys
+COPY ./conf/id_rsa /root/.ssh/id_rsa
 RUN chmod -R 600 /root/.ssh/ && mkdir /var/run/sshd && /usr/sbin/sshd-keygen
 
 # register sshd as a backend service
-ADD ./conf/sshd.ini /etc/supervisord.d/sshd.ini
+COPY ./conf/sshd.ini /etc/supervisord.d/sshd.ini
 
 # install ntp to sync date and time
 RUN yum install -y wget ntp ntpdate && ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
-RUN /usr/sbin/ntpdate -u pool.ntp.org
+# RUN /usr/sbin/ntpdate -u pool.ntp.org
 
 # init clouder-manager.repo and install cloudera manager
 ADD ./packages/cloudera-manager-centos7-cm5.12.0_x86_64.tar.gz /opt/
-ADD ./packages/mysql-connector-java-6.0.2.jar /opt/cm-5.12.0/share/cmf/lib/
-# RUN . /etc/profile && /opt/cm-5.12.0/share/cmf/schema/scm_prepare_database.sh mysql cm -h172.19.0.2 -uroot -p123123 --scm-host localhost scm scm scm
+COPY ./packages/mysql-connector-java-5.1.42.jar /opt/cm-5.12.0/share/cmf/lib/
+COPY ./packages/CDH-5.12.0-1.cdh5.12.0.p0.29-el7.parcel /opt/cloudera/parcel-repo/CDH-5.12.0-1.cdh5.12.0.p0.29-el7.parcel
+COPY ./packages/CDH-5.12.0-1.cdh5.12.0.p0.29-el7.parcel.sha1 /opt/cloudera/parcel-repo/CDH-5.12.0-1.cdh5.12.0.p0.29-el7.parcel.sha
+COPY ./packages/manifest.json /opt/cloudera/parcel-repo/manifest.json
+
+RUN yum install -y which psmisc
 
 
+
+
+RUN useradd --system --home=/opt/cm-5.12.0/run/cloudera-scm-server/ --no-create-home --shell=/bin/false --comment "Cloudera SCM User" cloudera-scm
+RUN mkdir /var/lib/cloudera-scm-server 
+# RUN mkdir /opt/cloudera/parcel-repo
+
+# /opt/cm-5.12.0/etc/cloudera-scm-agent/config.ini
+# RUN . /etc/profile && /opt/cm-5.12.0/share/cmf/schema/scm_prepare_database.sh mysql cloudera_manager -h172.19.0.2 -uroot -p123123 --scm-host namenode root 123123
+# /opt/cm-5.12.0/etc/init.d/cloudera-scm-agent status 
+# /opt/cm-5.12.0/etc/init.d/cloudera-scm-server status
 
 # settings for exposing ports
-EXPOSE 22
+EXPOSE 22 7180 
 
 # entrypoint command
 ENTRYPOINT ["/usr/bin/supervisord"]
