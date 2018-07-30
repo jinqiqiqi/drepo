@@ -68,8 +68,6 @@ ENTRYPOINT ["/usr/bin/supervisord"]
 
 
 
-# mkdir bootstrap/cache
-# chmod -Rvf 777 bootstrap/cache
+# sudo mkdir -p bootstrap/cache storage/framework/{cache,sessions,views}
 
 # sudo chmod -R 777 bootstrap/cache storage
-# mkdir -p  storage/framework/sessions
