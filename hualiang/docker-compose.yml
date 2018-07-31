@@ -1,3 +1,14 @@
+redis:
+    build: ./redis
+    expose:
+        - "6379"
+    # ports:
+    #     - "6379:6379"
+    volumes_from:
+        - data
+    environment:
+        - TERM=dumb
+
 mysql:
     build: ./mysql
     expose:
@@ -32,10 +43,10 @@ data:
         - $HOME/Data/mjq/logs/php-fpm/:/var/log/php-fpm/
         - $HOME/Data/mjq/logs/mysql/:/var/log/mysql/
         - $HOME/Data/mjq/data/mysql/:/var/lib/mysql/
-        - $HOME/Public/jobs/meijiequan/public/:/usr/share/nginx/mjq/html/
-        - $HOME/Public/jobs/meijiequan/:/usr/share/nginx/mjq/
-        - $HOME/Public/jobs/lite-sky-fire/public:/usr/share/nginx/sell/html/
-        - $HOME/Public/jobs/lite-sky-fire/:/usr/share/nginx/sell/
+        - $HOME/Public/project/MJQProject/public/:/usr/share/nginx/mjq/html/
+        - $HOME/Public/project/MJQProject/:/usr/share/nginx/mjq/
+        - $HOME/Public/project/litSkyFire/public:/usr/share/nginx/sell/html/
+        - $HOME/Public/project/litSkyFire/:/usr/share/nginx/sell/
 
     environment:
         - TERM=dumb
