@@ -31,6 +31,7 @@ mjq:
         - "80:80"
     links:
         - mysql
+        - redis
     volumes_from:
         - data
     environment:
