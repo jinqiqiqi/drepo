@@ -2,8 +2,8 @@ redis:
     build: ./redis
     expose:
         - "6379"
-    # ports:
-    #     - "6379:6379"
+    ports:
+        - "6379:6379"
     volumes_from:
         - data
     environment:
@@ -13,8 +13,8 @@ mysql:
     build: ./mysql
     expose:
         - "3306"
-    # ports:
-    #    - "3306:3306"
+    ports:
+       - "3306:3306"
     volumes_from:
         - data
     environment:
@@ -32,6 +32,10 @@ mjq:
     links:
         - mysql
         - redis
+    extra_hosts:
+        - "sell.mjq.hl:127.0.0.1"
+        - "news.mjq.hl:127.0.0.1"
+        - "marketing.mjq.hl:127.0.0.1"
     volumes_from:
         - data
     environment:
